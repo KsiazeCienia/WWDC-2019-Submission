@@ -105,7 +105,7 @@ final class GameView: UIView {
             var boxRow: [BoxView] = []
             for j in 0 ..< game.board.cols {
                 let boxView = BoxView(frame: .zero)
-                let position = Position(row: i, col: j)
+                let position = Location(row: i, col: j)
                 boxView.position = position
                 boxView.setup(with: game.box(for: position))
                 stackView.addArrangedSubview(boxView)
@@ -142,7 +142,7 @@ extension GameView: GameDelegate {
         
     }
 
-    func changeSelectionBoxStatus(at position: Position, to value: Bool) {
+    func changeSelectionBoxStatus(at position: Location, to value: Bool) {
         sortedBoxes[position.row][position.col].isSelected = value
     }
 }

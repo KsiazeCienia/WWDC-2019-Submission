@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C18277DC223FB72D00209369 /* BoxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18277DB223FB72D00209369 /* BoxNode.swift */; };
 		C186CC33223D92E200EF9BC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C186CC32223D92E200EF9BC2 /* AppDelegate.swift */; };
 		C186CC35223D92E200EF9BC2 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C186CC34223D92E200EF9BC2 /* GameScene.sks */; };
 		C186CC37223D92E200EF9BC2 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = C186CC36223D92E200EF9BC2 /* Actions.sks */; };
@@ -21,7 +22,7 @@
 		C186CC51223DA5B800EF9BC2 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = C186CC50223DA5B800EF9BC2 /* Game.swift */; };
 		C186CC53223E63A100EF9BC2 /* bin.png in Resources */ = {isa = PBXBuildFile; fileRef = C186CC52223E63A100EF9BC2 /* bin.png */; };
 		C186CC55223E63CD00EF9BC2 /* waste.png in Resources */ = {isa = PBXBuildFile; fileRef = C186CC54223E63CD00EF9BC2 /* waste.png */; };
-		C186CC58223ECEA300EF9BC2 /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = C186CC57223ECEA300EF9BC2 /* Position.swift */; };
+		C186CC58223ECEA300EF9BC2 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = C186CC57223ECEA300EF9BC2 /* Location.swift */; };
 		C186CC5A223ED12500EF9BC2 /* ArrayExtansion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C186CC59223ED12500EF9BC2 /* ArrayExtansion.swift */; };
 		C186CC5C223EDF0A00EF9BC2 /* trap.png in Resources */ = {isa = PBXBuildFile; fileRef = C186CC5B223EDF0A00EF9BC2 /* trap.png */; };
 		C186CC5E223F06AD00EF9BC2 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = C186CC5D223F06AD00EF9BC2 /* Box.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C18277DB223FB72D00209369 /* BoxNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxNode.swift; sourceTree = "<group>"; };
 		C186CC2F223D92E200EF9BC2 /* ZeroWaste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroWaste.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C186CC32223D92E200EF9BC2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C186CC34223D92E200EF9BC2 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -46,7 +48,7 @@
 		C186CC50223DA5B800EF9BC2 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		C186CC52223E63A100EF9BC2 /* bin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bin.png; sourceTree = "<group>"; };
 		C186CC54223E63CD00EF9BC2 /* waste.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waste.png; sourceTree = "<group>"; };
-		C186CC57223ECEA300EF9BC2 /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
+		C186CC57223ECEA300EF9BC2 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		C186CC59223ED12500EF9BC2 /* ArrayExtansion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtansion.swift; sourceTree = "<group>"; };
 		C186CC5B223EDF0A00EF9BC2 /* trap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trap.png; sourceTree = "<group>"; };
 		C186CC5D223F06AD00EF9BC2 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
@@ -100,11 +102,12 @@
 				C186CC5B223EDF0A00EF9BC2 /* trap.png */,
 				C186CC4E223DA28800EF9BC2 /* GameView.swift */,
 				C186CC50223DA5B800EF9BC2 /* Game.swift */,
-				C186CC57223ECEA300EF9BC2 /* Position.swift */,
+				C186CC57223ECEA300EF9BC2 /* Location.swift */,
 				C186CC59223ED12500EF9BC2 /* ArrayExtansion.swift */,
 				C186CC5D223F06AD00EF9BC2 /* Box.swift */,
 				C186CC5F223F06C100EF9BC2 /* GamePhase.swift */,
 				C186CC61223F9EA200EF9BC2 /* BoardNode.swift */,
+				C18277DB223FB72D00209369 /* BoxNode.swift */,
 			);
 			path = ZeroWaste;
 			sourceTree = "<group>";
@@ -192,9 +195,10 @@
 				C186CC4D223D9F7800EF9BC2 /* BoxView.swift in Sources */,
 				C186CC4B223D92F600EF9BC2 /* Board.swift in Sources */,
 				C186CC4F223DA28800EF9BC2 /* GameView.swift in Sources */,
-				C186CC58223ECEA300EF9BC2 /* Position.swift in Sources */,
+				C186CC58223ECEA300EF9BC2 /* Location.swift in Sources */,
 				C186CC62223F9EA200EF9BC2 /* BoardNode.swift in Sources */,
 				C186CC5A223ED12500EF9BC2 /* ArrayExtansion.swift in Sources */,
+				C18277DC223FB72D00209369 /* BoxNode.swift in Sources */,
 				C186CC33223D92E200EF9BC2 /* AppDelegate.swift in Sources */,
 				C186CC5E223F06AD00EF9BC2 /* Box.swift in Sources */,
 			);

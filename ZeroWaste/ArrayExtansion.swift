@@ -28,7 +28,7 @@ extension Array where Element == Box {
         for row in 0 ... maxPosition.row {
             var rowBox: [Box] = []
             for col in 0 ... maxPosition.col {
-                let position = Position(row: row, col: col)
+                let position = Location(row: row, col: col)
                 let box = first(where: { $0.position == position })!
                 rowBox.append(box)
             }

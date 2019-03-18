@@ -22,7 +22,7 @@ final class BoxView: UIView {
         }
     }
 
-    var position: Position!
+    var position: Location!
     var box: Box!
 
     override init(frame: CGRect) {

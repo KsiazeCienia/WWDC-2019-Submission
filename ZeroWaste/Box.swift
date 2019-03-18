@@ -10,11 +10,11 @@ import Foundation
 
 struct Box {
 
-    let position: Position
+    let position: Location
     var isSelected: Bool
     var type: BoxType
 
-    init(position: Position) {
+    init(position: Location) {
         self.position = position
         self.isSelected = false
         self.type = .standard
