@@ -13,6 +13,7 @@ final class BoardNode: SKSpriteNode {
     // MARK: - Constants
 
     private let itemSpacing: CGFloat = 5
+    private let prepareTime: TimeInterval = 3
 
     private let board: Board
 
@@ -29,13 +30,30 @@ final class BoardNode: SKSpriteNode {
     init(board: Board, size: CGSize) {
         self.board = board
         super.init(texture: nil, color: .clear, size: size)
-        setupBoard()
+        isUserInteractionEnabled = true
         game.delegate = self
         game.prepareNewGame()
+        setupBoard()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Game logic
+
+    func startGame() {
+        turnOnPrepareMode()
+        Timer.scheduledTimer(timeInterval: prepareTime, target: self, selector: #selector(turnOnPlayMode), userInfo: nil, repeats: false)
+    }
+
+    @objc
+    private func turnOnPlayMode() {
+        boxes.forEach { $0.updatePhase(.play) }
+    }
+
+    private func turnOnPrepareMode() {
+        boxes.forEach { $0.updatePhase(.prepare) }
     }
 
     // MARK: - Event handlers
@@ -43,19 +61,15 @@ final class BoardNode: SKSpriteNode {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
-        let selectedView = atPoint(location)
-        let selectedBox = boxes.first { $0 === selectedView }
-        guard let boxView = selectedBox else { return }
-        game.selectingBegan(in: boxView.location)
+        guard let box = atPoint(location) as? BoxNode else { return }
+        game.selectingBegan(in: box.location)
     }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
-        let selectedView = atPoint(location)
-        let selectedBox = boxes.first { $0 === selectedView }
-        guard let boxView = selectedBox else { return }
-        game.selectionContinue(to: boxView.location)
+        guard let box = atPoint(location) as? BoxNode else { return }
+        game.selectionContinue(to: box.location)
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -66,14 +80,18 @@ final class BoardNode: SKSpriteNode {
 
     private func setupBoard() {
         for row in 0 ..< board.rows {
+            var rowBox: [BoxNode] = []
             for col in 0 ..< board.cols {
                 let size = sizeForNode()
                 let location =  Location(row: row, col: col)
                 let node = BoxNode(color: .red, size: size)
                 node.location = location
+                node.setup(with: game.box(for: location))
                 node.position = position(for: location, size: size)
                 addChild(node)
+                rowBox.append(node)
             }
+            sortedBoxes.append(rowBox)
         }
     }
 
@@ -91,11 +109,11 @@ final class BoardNode: SKSpriteNode {
 }
 
 extension BoardNode: GameDelegate {
-    func changeSelectionBoxStatus(at position: Location, to value: Bool) {
-        sortedBoxes[position.row][position.col].isSelected = value
+    func gameEnded(with result: Bool) {
+        boxes.forEach { $0.updatePhase(.end) }
     }
 
-    func gameEnded() {
-
+    func changeSelectionBoxStatus(at position: Location, to value: Bool) {
+        sortedBoxes[position.row][position.col].isSelected = value
     }
 }

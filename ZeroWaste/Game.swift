@@ -10,7 +10,7 @@ import Foundation
 
 protocol GameDelegate: class {
     func changeSelectionBoxStatus(at position: Location, to value: Bool)
-    func gameEnded()
+    func gameEnded(with result: Bool)
 }
 
 final class Game {
@@ -27,7 +27,7 @@ final class Game {
     private var allBoxes: [Box] {
         return sortedBoxes.flatMap{ $0 }
     }
-    private var selectedPositions: [Location] = []
+    private var selectedBoxes: [Box] = []
     private var currentPosition: Location?
 
     init() {
@@ -48,14 +48,16 @@ final class Game {
     func selectingBegan(in position: Location) {
         guard position == startPosition else { return }
         currentPosition = position
-        sortedBoxes[position.row][position.col].isSelected = true
-        selectedPositions.append(position)
+        let selectedBox = sortedBoxes[position.row][position.col]
+        selectedBox.isSelected = true
+        selectedBoxes.append(selectedBox)
         delegate?.changeSelectionBoxStatus(at: position, to: true)
     }
 
     func selectionContinue(to position: Location) {
         guard let _currentPosition = currentPosition,
             _currentPosition != position,
+            position != endPosition,
             position.canBeAchived(from: _currentPosition) else {
                 return
         }
@@ -70,31 +72,43 @@ final class Game {
     func selectionEnded() {
         guard let finalPosition = currentPosition else { return }
         if finalPosition == endPosition {
-            
+            checkResult()
         } else {
-            for selectedPostion in selectedPositions {
-                sortedBoxes[selectedPostion.row][selectedPostion.col].isSelected = false
-                delegate?.changeSelectionBoxStatus(at: selectedPostion, to: false)
+            for box in selectedBoxes {
+                box.isSelected = false
+                delegate?.changeSelectionBoxStatus(at: box.position, to: false)
             }
-            selectedPositions = []
+            selectedBoxes = []
         }
     }
 
-    // MARK: - Privates
+    // MARK: - checking result
+
+    private func checkResult() {
+        let traps = selectedBoxes.filter { $0.isSelected && $0.type == .trap }
+        let gameResult = traps.isEmpty
+        print("RESULT \(gameResult)")
+        delegate?.gameEnded(with: gameResult)
+    }
+
+    // MARK: - handling move
 
     private func handleBackwardMove(at position: Location) {
-        selectedPositions.removeLast()
+        selectedBoxes.removeLast()
         delegate?.changeSelectionBoxStatus(at: currentPosition!, to: false)
         currentPosition = position
         sortedBoxes[position.row][position.col].isSelected = false
     }
 
     private func handleForwardMove(at position: Location) {
-        sortedBoxes[position.row][position.col].isSelected = true
+        let selectedBox = sortedBoxes[position.row][position.col]
+        selectedBox.isSelected = true
         currentPosition = position
-        selectedPositions.append(position)
+        selectedBoxes.append(selectedBox)
         delegate?.changeSelectionBoxStatus(at: position, to: true)
     }
+
+    // MARK: - Game preparation
 
     private func createBoxes(for board: Board) -> [Box] {
         var boxes: [Box] = []
@@ -113,17 +127,17 @@ final class Game {
         var newBoxes: [Box] = []
 
         for _ in 0 ..< numberOfTraps {
-            var box = boxes.dropRandom()
+            let box = boxes.dropRandom()
             box.type = .trap
             newBoxes.append(box)
         }
 
-        var startBox =  boxes.dropRandom()
+        let startBox =  boxes.dropRandom()
         startPosition = startBox.position
         startBox.type = .start
         newBoxes.append(startBox)
 
-        var endBox = boxes.dropRandom()
+        let endBox = boxes.dropRandom()
         endPosition = endBox.position
         endBox.type = .end
         newBoxes.append(endBox)

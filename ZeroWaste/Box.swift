@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Box {
+class Box {
 
     let position: Location
     var isSelected: Bool

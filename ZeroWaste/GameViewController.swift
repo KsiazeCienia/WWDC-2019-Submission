@@ -13,12 +13,6 @@ import GameplayKit
 class GameViewController: UIViewController {
 
 
-    private let gameView: GameView = {
-        let gameView = GameView(frame: .zero)
-        gameView.translatesAutoresizingMaskIntoConstraints = false
-        return gameView
-    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
 //        setupLeyout()
@@ -64,17 +58,6 @@ class GameViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return true
-    }
-
-    private func setupLeyout() {
-        view.addSubview(gameView)
-
-        NSLayoutConstraint.activate([
-            gameView.topAnchor.constraint(equalTo: view.topAnchor),
-            gameView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            gameView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            gameView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        ])
     }
 
 
