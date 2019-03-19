@@ -17,11 +17,12 @@ final class MenuScene: SKScene {
 
     // MARk: - Constants
 
-    private let dropDuration: TimeInterval = 0.5
-
+    private let dropDuration: TimeInterval = 0.1
+    private let trashLimit: Int = 40
     // MARK: - Variables
 
     private var timer: Timer!
+    private var trashCounter: Int = 0
 
     // MARK: - Scene's life cycle
 
@@ -45,24 +46,31 @@ final class MenuScene: SKScene {
 
     @objc
     private func dropTrash() {
+        guard trashCounter < trashLimit else {
+            timer.invalidate()
+            return
+        }
         let trash = createTrash()
         addChild(trash)
+        trashCounter = trashCounter + 1
     }
 
     // MARK: - Setup
 
     private func setupWorld() {
+        view?.showsFPS = true
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsBody?.isDynamic = false
-        physicsWorld.gravity = CGVector(dx: 0, dy: -3)
+        physicsWorld.gravity = CGVector(dx: 0, dy: -5)
     }
 
     private func setupButton() {
         let size = CGSize(width: 200, height: 40)
         button = ButtonNode(size: size)
         button.position = CGPoint(x: frame.midX, y: frame.midY)
-        button.physicsBody = SKPhysicsBody(rectangleOf: size)
-        button.physicsBody?.isDynamic = false
+        button.zPosition = 1
+//        button.physicsBody = SKPhysicsBody(rectangleOf: size)
+//        button.physicsBody?.isDynamic = false
         button.setTarget(self, action: #selector(playTapped))
         button.setTitle("KURWY")
         addChild(button)
@@ -77,13 +85,19 @@ final class MenuScene: SKScene {
     }
 
     private func createTrash() -> SKSpriteNode {
-        let trash = SKSpriteNode(imageNamed: "bin")
-        trash.size = CGSize(width: 70, height: 70)
+        let images = ["garbage", "water"]
+        let random = images.randomElement()!
+        let trash = SKSpriteNode(imageNamed: random)
+        let size = CGSize(width: 40, height: 80)
+        trash.size = size
+        trash.zRotation = CGFloat.random(in: 0 ... 360)
+        trash.aspectFillToSize(fillSize: size)
         let xPosition = GKRandomDistribution(lowestValue: Int(frame.minX),
                                              highestValue: Int(frame.maxX))
         trash.position = CGPoint(x: CGFloat(xPosition.nextInt()),
                                  y: frame.maxY - 1)
         trash.physicsBody = SKPhysicsBody(rectangleOf: trash.size)
+        trash.physicsBody?.mass = 1
         return trash
     }
 }

@@ -9,6 +9,7 @@
 import Foundation
 
 enum GamePhase {
+    case initial
     case prepare
     case play
     case end

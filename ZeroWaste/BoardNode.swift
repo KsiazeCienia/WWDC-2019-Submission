@@ -34,6 +34,7 @@ final class BoardNode: SKSpriteNode {
         game.delegate = self
         game.prepareNewGame()
         setupBoard()
+        changeBoxMode(to: .initial)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -45,6 +46,10 @@ final class BoardNode: SKSpriteNode {
     func startGame() {
         turnOnPrepareMode()
         Timer.scheduledTimer(timeInterval: prepareTime, target: self, selector: #selector(turnOnPlayMode), userInfo: nil, repeats: false)
+    }
+
+    private func changeBoxMode(to phase: GamePhase) {
+        boxes.forEach { $0.updatePhase(phase) }
     }
 
     @objc

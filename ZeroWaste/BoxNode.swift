@@ -34,7 +34,13 @@ final class BoxNode: SKSpriteNode {
             setupForPlayMode()
         case .end:
             setupForEndMode()
+        case .initial:
+            setupForInitialMode()
         }
+    }
+
+    private func setupForInitialMode() {
+        texture = nil
     }
 
     private func setupForPrepareMode() {
@@ -70,7 +76,7 @@ final class BoxNode: SKSpriteNode {
         case .standard:
             imageAsset = ""
         case .start:
-            imageAsset = "waste.png"
+            imageAsset = "water"
         case .end:
             imageAsset = "bin.png"
         case .trap:
