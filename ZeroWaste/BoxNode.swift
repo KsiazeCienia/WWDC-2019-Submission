@@ -10,6 +10,16 @@ import SpriteKit
 
 final class BoxNode: SKSpriteNode {
 
+    // MARK: - Views
+
+    private var assetNode: SKSpriteNode!
+
+    // MARK: - Constants
+
+    private let animationDuration: Double = 0.5
+
+    // MARK: - Variable
+
     var location: Location!
     var box: Box!
 
@@ -19,11 +29,25 @@ final class BoxNode: SKSpriteNode {
         }
     }
 
+    // MARk: - Initalizers
+
+    init(box: Box, size: CGSize) {
+        super.init(texture: nil, color: .clear, size: size)
+        setup(with: box)
+        setupAsset()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Public
+
     func setup(with box: Box) {
         self.box = box
         color = box.isSelected ? .green : .brown
         guard box.type != .standard else { return }
-        texture = SKTexture(imageNamed: imageAsset(for: box.type))
+//        texture = SKTexture(imageNamed: imageAsset(for: box.type))
     }
 
     func updatePhase(_ phase: GamePhase) {
@@ -39,8 +63,30 @@ final class BoxNode: SKSpriteNode {
         }
     }
 
+    // MARK: - Private
+
+    private func hideAsset(with duration: Double) {
+        let fadeOut = SKAction.fadeOut(withDuration: duration)
+        assetNode.run(fadeOut)
+    }
+
+    private func showAsset(with duration: Double) {
+        let fadeIn = SKAction.fadeIn(withDuration: duration)
+        assetNode.run(fadeIn)
+    }
+
+    private func setupAsset() {
+        guard box.type != .standard else { return }
+        let imageString = imageAsset(for: box.type)
+        assetNode = SKSpriteNode(imageNamed: imageString)
+        assetNode.position = position
+        assetNode.size = size
+        hideAsset(with: 0)
+        addChild(assetNode)
+    }
+
     private func setupForInitialMode() {
-        texture = nil
+//        hideAsset(with: 0)
     }
 
     private func setupForPrepareMode() {
@@ -48,9 +94,9 @@ final class BoxNode: SKSpriteNode {
         case .standard:
             return
         case .start, .end:
-            texture = nil
+            hideAsset(with: animationDuration)
         case .trap:
-            texture = SKTexture(imageNamed: imageAsset(for: box.type))
+            showAsset(with: animationDuration)
         }
     }
 
@@ -59,9 +105,9 @@ final class BoxNode: SKSpriteNode {
         case .standard:
             return
         case .start, .end:
-            texture = SKTexture(imageNamed: imageAsset(for: box.type))
+            showAsset(with: animationDuration)
         case .trap:
-            texture = nil
+            hideAsset(with: animationDuration)
         }
     }
 

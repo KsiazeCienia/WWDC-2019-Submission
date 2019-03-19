@@ -89,9 +89,9 @@ final class BoardNode: SKSpriteNode {
             for col in 0 ..< board.cols {
                 let size = sizeForNode()
                 let location =  Location(row: row, col: col)
-                let node = BoxNode(color: .red, size: size)
+                let box = game.box(for: location)
+                let node = BoxNode(box: box, size: size)
                 node.location = location
-                node.setup(with: game.box(for: location))
                 node.position = position(for: location, size: size)
                 addChild(node)
                 rowBox.append(node)
