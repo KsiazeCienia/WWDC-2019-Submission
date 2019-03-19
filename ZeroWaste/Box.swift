@@ -8,14 +8,14 @@
 
 import Foundation
 
-class Box {
+final class Box {
 
-    let position: Location
+    let location: Location
     var isSelected: Bool
     var type: BoxType
 
     init(position: Location) {
-        self.position = position
+        self.location = position
         self.isSelected = false
         self.type = .standard
     }

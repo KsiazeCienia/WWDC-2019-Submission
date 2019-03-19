@@ -15,15 +15,20 @@ protocol GameDelegate: class {
 
 final class Game {
 
+    // MARK: - Delegate
+
     weak var delegate: GameDelegate?
 
     var board = Board(rows: 5, cols: 5)
     var numberOfTraps = 5
 
-    var sortedBoxes: [[Box]] = []
-    var startPosition: Location!
-    var endPosition: Location!
+    // MARK: - Services
 
+    private let gameRandmizer = GameRandomizer()
+
+    // MARK: - Private variables
+
+    private var sortedBoxes: [[Box]] = []
     private var allBoxes: [Box] {
         return sortedBoxes.flatMap{ $0 }
     }
@@ -37,8 +42,7 @@ final class Game {
     // MARK: - Public
 
     func prepareNewGame() {
-        let boxes = createBoxes(for: board)
-        sortedBoxes = randomizeGameObjects(for: boxes).sort()
+        sortedBoxes = gameRandmizer.prepareGame(for: board, numberOfTraps: numberOfTraps)
     }
 
     func box(for position: Location) -> Box {
@@ -46,9 +50,9 @@ final class Game {
     }
 
     func selectingBegan(in position: Location) {
-        guard position == startPosition else { return }
-        currentPosition = position
         let selectedBox = sortedBoxes[position.row][position.col]
+        guard selectedBox.type == .start else { return }
+        currentPosition = position
         selectedBox.isSelected = true
         selectedBoxes.append(selectedBox)
         delegate?.changeSelectionBoxStatus(at: position, to: true)
@@ -57,7 +61,6 @@ final class Game {
     func selectionContinue(to position: Location) {
         guard let _currentPosition = currentPosition,
             _currentPosition != position,
-            position != endPosition,
             position.canBeAchived(from: _currentPosition) else {
                 return
         }
@@ -71,12 +74,13 @@ final class Game {
 
     func selectionEnded() {
         guard let finalPosition = currentPosition else { return }
-        if finalPosition == endPosition {
+        let finalBox = sortedBoxes[finalPosition.row][finalPosition.col]
+        if finalBox.type == .end {
             checkResult()
         } else {
             for box in selectedBoxes {
                 box.isSelected = false
-                delegate?.changeSelectionBoxStatus(at: box.position, to: false)
+                delegate?.changeSelectionBoxStatus(at: box.location, to: false)
             }
             selectedBoxes = []
         }
@@ -106,44 +110,5 @@ final class Game {
         currentPosition = position
         selectedBoxes.append(selectedBox)
         delegate?.changeSelectionBoxStatus(at: position, to: true)
-    }
-
-    // MARK: - Game preparation
-
-    private func createBoxes(for board: Board) -> [Box] {
-        var boxes: [Box] = []
-        for i in 0 ..< board.rows {
-            for j in 0 ..< board.cols {
-                let position = Location(row: i, col: j)
-                let box = Box(position: position)
-                boxes.append(box)
-            }
-        }
-        return boxes
-    }
-
-    private func randomizeGameObjects(for boxes: [Box]) -> [Box] {
-        var boxes = boxes
-        var newBoxes: [Box] = []
-
-        for _ in 0 ..< numberOfTraps {
-            let box = boxes.dropRandom()
-            box.type = .trap
-            newBoxes.append(box)
-        }
-
-        let startBox =  boxes.dropRandom()
-        startPosition = startBox.position
-        startBox.type = .start
-        newBoxes.append(startBox)
-
-        let endBox = boxes.dropRandom()
-        endPosition = endBox.position
-        endBox.type = .end
-        newBoxes.append(endBox)
-
-        newBoxes.append(contentsOf: boxes)
-
-        return newBoxes
     }
 }
