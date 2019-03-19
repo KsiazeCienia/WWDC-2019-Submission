@@ -18,13 +18,17 @@ final class MenuScene: SKScene {
 
     override func didMove(to view: SKView) {
         setupButton()
+
     }
 
     // MARK: - Event handlers
 
     @objc
     private func playTapped() {
-        
+        let gameScene = GameScene(size: size)
+        scene?.scaleMode = .aspectFill
+        let transition = SKTransition.fade(withDuration: 1)
+        view?.presentScene(gameScene, transition: transition)
     }
 
     // MARK: - Setup
