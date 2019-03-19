@@ -27,6 +27,8 @@
 		C186CC5E223F06AD00EF9BC2 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = C186CC5D223F06AD00EF9BC2 /* Box.swift */; };
 		C186CC60223F06C100EF9BC2 /* GamePhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C186CC5F223F06C100EF9BC2 /* GamePhase.swift */; };
 		C186CC62223F9EA200EF9BC2 /* BoardNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C186CC61223F9EA200EF9BC2 /* BoardNode.swift */; };
+		C1D9265122416C2F0006E4F3 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D9265022416C2F0006E4F3 /* MenuScene.swift */; };
+		C1D9265322416CEA0006E4F3 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D9265222416CEA0006E4F3 /* ButtonNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,8 @@
 		C186CC5D223F06AD00EF9BC2 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		C186CC5F223F06C100EF9BC2 /* GamePhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePhase.swift; sourceTree = "<group>"; };
 		C186CC61223F9EA200EF9BC2 /* BoardNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNode.swift; sourceTree = "<group>"; };
+		C1D9265022416C2F0006E4F3 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
+		C1D9265222416CEA0006E4F3 /* ButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +109,8 @@
 				C186CC61223F9EA200EF9BC2 /* BoardNode.swift */,
 				C18277DB223FB72D00209369 /* BoxNode.swift */,
 				C18277DD22401C3300209369 /* GameRandomizer.swift */,
+				C1D9265022416C2F0006E4F3 /* MenuScene.swift */,
+				C1D9265222416CEA0006E4F3 /* ButtonNode.swift */,
 			);
 			path = ZeroWaste;
 			sourceTree = "<group>";
@@ -191,12 +197,14 @@
 				C186CC51223DA5B800EF9BC2 /* Game.swift in Sources */,
 				C186CC60223F06C100EF9BC2 /* GamePhase.swift in Sources */,
 				C186CC4B223D92F600EF9BC2 /* Board.swift in Sources */,
+				C1D9265122416C2F0006E4F3 /* MenuScene.swift in Sources */,
 				C186CC58223ECEA300EF9BC2 /* Location.swift in Sources */,
 				C186CC62223F9EA200EF9BC2 /* BoardNode.swift in Sources */,
 				C186CC5A223ED12500EF9BC2 /* ArrayExtansion.swift in Sources */,
 				C18277DC223FB72D00209369 /* BoxNode.swift in Sources */,
 				C186CC33223D92E200EF9BC2 /* AppDelegate.swift in Sources */,
 				C186CC5E223F06AD00EF9BC2 /* Box.swift in Sources */,
+				C1D9265322416CEA0006E4F3 /* ButtonNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

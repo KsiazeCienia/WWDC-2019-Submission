@@ -35,10 +35,6 @@ final class Game {
     private var selectedBoxes: [Box] = []
     private var currentPosition: Location?
 
-    init() {
-
-    }
-
     // MARK: - Public
 
     func prepareNewGame() {
