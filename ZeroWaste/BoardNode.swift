@@ -68,11 +68,11 @@ final class BoardNode: SKSpriteNode {
 
     @objc
     private func turnOnPlayMode() {
-        boxes.forEach { $0.updatePhase(.play) }
+        changeBoxMode(to: .play)
     }
 
     private func turnOnPrepareMode() {
-        boxes.forEach { $0.updatePhase(.prepare) }
+        changeBoxMode(to: .prepare)
     }
 
     // MARK: - Event handlers

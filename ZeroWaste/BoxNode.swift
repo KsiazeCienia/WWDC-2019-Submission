@@ -52,12 +52,13 @@ final class BoxNode: SKSpriteNode, Localizable {
     func update(with box: Box) {
         self.box = box
         isSelected = false
-//        guard let assetNode = assetNode else { return }
-        removeAllChildren()
-        self.assetNode = nil
+        if let assetNode = assetNode {
+            removeChildren(in: [assetNode])
+            self.assetNode = nil
+        }
+        setupAsset()
 //        setupAsset()
 //        assetNode?.texture = nil
-//        guard box.type != .standard else { return }
 //        let imageString = imageAsset(for: box.type)
 //        assetNode?.texture = SKTexture(imageNamed: imageString)
 //        hideAsset(with: 0)
@@ -97,10 +98,11 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     private func setupAsset() {
         guard box.type != .standard else { return }
+        print(box.type)
         let imageString = imageAsset(for: box.type)
         assetNode = LocalizedNode(imageNamed: imageString)
         assetNode?.location = location
-        assetNode?.position = position
+        assetNode?.position = .zero
         assetNode?.size = size
         assetNode?.isUserInteractionEnabled = false
         hideAsset(with: 0)
