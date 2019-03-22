@@ -8,6 +8,10 @@
 
 import SpriteKit
 
+protocol BoardNodeDelegate: class {
+    func gameEnded()
+}
+
 final class BoardNode: SKSpriteNode {
 
     // MARK: - Constants
@@ -24,6 +28,10 @@ final class BoardNode: SKSpriteNode {
     private var boxes: [BoxNode] {
         return sortedBoxes.flatMap { $0 }
     }
+
+    // MARK: - Delegates
+
+    weak var delegate: BoardNodeDelegate?
 
     // MARK: - Initializers
 
@@ -42,6 +50,12 @@ final class BoardNode: SKSpriteNode {
     }
 
     // MARK: - Game logic
+
+    func prepareNewGame() {
+        game.prepareNewGame()
+        boxes.forEach { $0.update(with: game.box(for: $0.location)) }
+        changeBoxMode(to: .initial)
+    }
 
     func startGame() {
         turnOnPrepareMode()
@@ -115,6 +129,7 @@ final class BoardNode: SKSpriteNode {
 extension BoardNode: GameDelegate {
     func gameEnded(with result: Bool) {
         boxes.forEach { $0.updatePhase(.end) }
+        delegate?.gameEnded()
     }
 
     func changeSelectionBoxStatus(at position: Location, to value: Bool) {

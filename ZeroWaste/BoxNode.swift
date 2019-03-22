@@ -16,7 +16,7 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     // MARK: - Views
 
-    private var assetNode: LocalizedNode!
+    private var assetNode: LocalizedNode?
 
     // MARK: - Constants
 
@@ -29,7 +29,7 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     var isSelected: Bool = false {
         didSet {
-            let imageName = box.isSelected ? "grass" : "dirt"
+            let imageName = isSelected ? "grass" : "dirt"
             texture = SKTexture(imageNamed: imageName)
         }
     }
@@ -49,13 +49,20 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     // MARK: - Public
 
-    func setup(with box: Box) {
+    func update(with box: Box) {
         self.box = box
-         let imageName = box.isSelected ? "grass" : "dirt"
-        texture = SKTexture(imageNamed: imageName)
-        guard box.type != .standard else { return }
-//        texture = SKTexture(imageNamed: imageAsset(for: box.type))
+        isSelected = false
+//        guard let assetNode = assetNode else { return }
+        removeAllChildren()
+        self.assetNode = nil
+//        setupAsset()
+//        assetNode?.texture = nil
+//        guard box.type != .standard else { return }
+//        let imageString = imageAsset(for: box.type)
+//        assetNode?.texture = SKTexture(imageNamed: imageString)
+//        hideAsset(with: 0)
     }
+
 
     func updatePhase(_ phase: GamePhase) {
         switch phase {
@@ -72,26 +79,32 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     // MARK: - Private
 
+    private func setup(with box: Box) {
+        self.box = box
+        let imageName = box.isSelected ? "grass" : "dirt"
+        texture = SKTexture(imageNamed: imageName)
+    }
+
     private func hideAsset(with duration: Double) {
         let fadeOut = SKAction.fadeOut(withDuration: duration)
-        assetNode.run(fadeOut)
+        assetNode?.run(fadeOut)
     }
 
     private func showAsset(with duration: Double) {
         let fadeIn = SKAction.fadeIn(withDuration: duration)
-        assetNode.run(fadeIn)
+        assetNode?.run(fadeIn)
     }
 
     private func setupAsset() {
         guard box.type != .standard else { return }
         let imageString = imageAsset(for: box.type)
         assetNode = LocalizedNode(imageNamed: imageString)
-        assetNode.location = location
-        assetNode.position = position
-        assetNode.size = size
-        assetNode.isUserInteractionEnabled = false
+        assetNode?.location = location
+        assetNode?.position = position
+        assetNode?.size = size
+        assetNode?.isUserInteractionEnabled = false
         hideAsset(with: 0)
-        addChild(assetNode)
+        addChild(assetNode!)
     }
 
     private func setupForInitialMode() {

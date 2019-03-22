@@ -22,10 +22,6 @@ final class Game {
     var board = Board(rows: 5, cols: 5)
     var numberOfTraps = 5
 
-    // MARK: - Services
-
-    private let gameRandmizer = GameRandomizer()
-
     // MARK: - Private variables
 
     private var sortedBoxes: [[Box]] = []
@@ -33,12 +29,14 @@ final class Game {
         return sortedBoxes.flatMap{ $0 }
     }
     private var selectedBoxes: [Box] = []
-    private var currentPosition: Location?
+    private var currentLocation: Location?
 
     // MARK: - Public
 
     func prepareNewGame() {
-        sortedBoxes = gameRandmizer.prepareGame(for: board, numberOfTraps: numberOfTraps)
+        selectedBoxes = []
+        currentLocation = nil
+        sortedBoxes = GameRandomizer().prepareGame(for: board, numberOfTraps: numberOfTraps)
     }
 
     func box(for position: Location) -> Box {
@@ -48,14 +46,14 @@ final class Game {
     func selectingBegan(in position: Location) {
         let selectedBox = sortedBoxes[position.row][position.col]
         guard selectedBox.type == .start else { return }
-        currentPosition = position
+        currentLocation = position
         selectedBox.isSelected = true
         selectedBoxes.append(selectedBox)
         delegate?.changeSelectionBoxStatus(at: position, to: true)
     }
 
     func selectionContinue(to position: Location) {
-        guard let _currentPosition = currentPosition,
+        guard let _currentPosition = currentLocation,
             _currentPosition != position,
             position.canBeAchived(from: _currentPosition) else {
                 return
@@ -69,7 +67,7 @@ final class Game {
     }
 
     func selectionEnded() {
-        guard let finalPosition = currentPosition else { return }
+        guard let finalPosition = currentLocation else { return }
         let finalBox = sortedBoxes[finalPosition.row][finalPosition.col]
         if finalBox.type == .end {
             checkResult()
@@ -95,15 +93,15 @@ final class Game {
 
     private func handleBackwardMove(at position: Location) {
         selectedBoxes.removeLast()
-        delegate?.changeSelectionBoxStatus(at: currentPosition!, to: false)
-        currentPosition = position
+        delegate?.changeSelectionBoxStatus(at: currentLocation!, to: false)
+        currentLocation = position
         sortedBoxes[position.row][position.col].isSelected = false
     }
 
     private func handleForwardMove(at position: Location) {
         let selectedBox = sortedBoxes[position.row][position.col]
         selectedBox.isSelected = true
-        currentPosition = position
+        currentLocation = position
         selectedBoxes.append(selectedBox)
         delegate?.changeSelectionBoxStatus(at: position, to: true)
     }

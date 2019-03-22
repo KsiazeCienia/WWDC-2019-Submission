@@ -63,6 +63,7 @@ final class GameScene: SKScene {
     private func setupBoard() {
         let size = CGSize(width: frame.width - 30, height: frame.width - 30)
         boardNode = BoardNode(board: board, size: size)
+        boardNode.delegate = self
         boardNode.position = CGPoint(x: frame.midX, y: frame.midY)
         addChild(boardNode)
     }
@@ -73,5 +74,12 @@ final class GameScene: SKScene {
         label.position = CGPoint(x: frame.midX, y: frame.maxY - 100)
         label.setScale(0.5)
         label.run(SKAction.fadeOut(withDuration: 0))
+    }
+}
+
+extension GameScene: BoardNodeDelegate {
+    func gameEnded() {
+        boardNode.prepareNewGame()
+        animateLabel()
     }
 }
