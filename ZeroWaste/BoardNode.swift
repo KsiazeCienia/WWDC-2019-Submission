@@ -66,14 +66,14 @@ final class BoardNode: SKSpriteNode {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
-        guard let box = atPoint(location) as? BoxNode else { return }
+        guard let box = atPoint(location) as? Localizable else { return }
         game.selectingBegan(in: box.location)
     }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
-        guard let box = atPoint(location) as? BoxNode else { return }
+        guard let box = atPoint(location) as? Localizable else { return }
         game.selectionContinue(to: box.location)
     }
 
@@ -90,8 +90,7 @@ final class BoardNode: SKSpriteNode {
                 let size = sizeForNode()
                 let location =  Location(row: row, col: col)
                 let box = game.box(for: location)
-                let node = BoxNode(box: box, size: size)
-                node.location = location
+                let node = BoxNode(box: box, location: location, size: size)
                 node.position = position(for: location, size: size)
                 addChild(node)
                 rowBox.append(node)

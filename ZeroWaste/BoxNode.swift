@@ -8,11 +8,15 @@
 
 import SpriteKit
 
-final class BoxNode: SKSpriteNode {
+protocol Localizable: class {
+    var location: Location! { get set }
+}
+
+final class BoxNode: SKSpriteNode, Localizable {
 
     // MARK: - Views
 
-    private var assetNode: SKSpriteNode!
+    private var assetNode: LocalizedNode!
 
     // MARK: - Constants
 
@@ -25,13 +29,15 @@ final class BoxNode: SKSpriteNode {
 
     var isSelected: Bool = false {
         didSet {
-            color = isSelected ? .green : .brown
+            let imageName = box.isSelected ? "grass" : "dirt"
+            texture = SKTexture(imageNamed: imageName)
         }
     }
 
     // MARk: - Initalizers
 
-    init(box: Box, size: CGSize) {
+    init(box: Box, location: Location, size: CGSize) {
+        self.location = location
         super.init(texture: nil, color: .clear, size: size)
         setup(with: box)
         setupAsset()
@@ -45,7 +51,8 @@ final class BoxNode: SKSpriteNode {
 
     func setup(with box: Box) {
         self.box = box
-        color = box.isSelected ? .green : .brown
+         let imageName = box.isSelected ? "grass" : "dirt"
+        texture = SKTexture(imageNamed: imageName)
         guard box.type != .standard else { return }
 //        texture = SKTexture(imageNamed: imageAsset(for: box.type))
     }
@@ -78,9 +85,11 @@ final class BoxNode: SKSpriteNode {
     private func setupAsset() {
         guard box.type != .standard else { return }
         let imageString = imageAsset(for: box.type)
-        assetNode = SKSpriteNode(imageNamed: imageString)
+        assetNode = LocalizedNode(imageNamed: imageString)
+        assetNode.location = location
         assetNode.position = position
         assetNode.size = size
+        assetNode.isUserInteractionEnabled = false
         hideAsset(with: 0)
         addChild(assetNode)
     }
@@ -122,9 +131,9 @@ final class BoxNode: SKSpriteNode {
         case .standard:
             imageAsset = ""
         case .start:
-            imageAsset = "water"
+            imageAsset = "plastic_bottle"
         case .end:
-            imageAsset = "bin.png"
+            imageAsset = "trash"
         case .trap:
             imageAsset = "trap.png"
         }

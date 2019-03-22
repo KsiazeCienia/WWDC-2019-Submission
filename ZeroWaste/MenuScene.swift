@@ -58,6 +58,7 @@ final class MenuScene: SKScene {
     // MARK: - Setup
 
     private func setupWorld() {
+        backgroundColor = .lightGray
         view?.showsFPS = true
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsBody?.isDynamic = false
@@ -85,7 +86,8 @@ final class MenuScene: SKScene {
     }
 
     private func createTrash() -> SKSpriteNode {
-        let images = ["garbage", "water"]
+//        let images = ["garbage" ,"Apple", "water","plastic_bottle", "glass_bottle"]
+        let images = ["Apple", "plastic_bottle", "glass_bottle", "paper"]
         let random = images.randomElement()!
         let trash = SKSpriteNode(imageNamed: random)
         let size = CGSize(width: 40, height: 80)
