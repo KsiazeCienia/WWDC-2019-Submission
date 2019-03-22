@@ -98,7 +98,6 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     private func setupAsset() {
         guard box.type != .standard else { return }
-        print(box.type)
         let imageString = imageAsset(for: box.type)
         assetNode = LocalizedNode(imageNamed: imageString)
         assetNode?.location = location

@@ -53,15 +53,18 @@ final class Game {
     }
 
     func selectionContinue(to position: Location) {
+        let selectedBox = sortedBoxes[position.row][position.col]
         guard let _currentPosition = currentLocation,
             _currentPosition != position,
             position.canBeAchived(from: _currentPosition) else {
                 return
         }
 
-        if sortedBoxes[position.row][position.col].isSelected {
+        if selectedBox.isSelected {
             handleBackwardMove(at: position)
         } else {
+            let currentBox = sortedBoxes[_currentPosition.row][_currentPosition.col]
+            guard currentBox.type != .end else { return }
             handleForwardMove(at: position)
         }
     }
