@@ -52,20 +52,20 @@ final class Game {
         delegate?.changeSelectionBoxStatus(at: position, to: true)
     }
 
-    func selectionContinue(to position: Location) {
-        let selectedBox = sortedBoxes[position.row][position.col]
-        guard let _currentPosition = currentLocation,
-            _currentPosition != position,
-            position.canBeAchived(from: _currentPosition) else {
+    func selectionContinue(to location: Location) {
+        let selectedBox = sortedBoxes[location.row][location.col]
+        guard let _currentLocation = currentLocation,
+            _currentLocation != location,
+            location.canBeAchived(from: _currentLocation) else {
                 return
         }
 
         if selectedBox.isSelected {
-            handleBackwardMove(at: position)
+            handleBackwardMove(at: location)
         } else {
-            let currentBox = sortedBoxes[_currentPosition.row][_currentPosition.col]
+            let currentBox = sortedBoxes[_currentLocation.row][_currentLocation.col]
             guard currentBox.type != .end else { return }
-            handleForwardMove(at: position)
+            handleForwardMove(at: location)
         }
     }
 
@@ -75,7 +75,7 @@ final class Game {
         if finalBox.type == .end {
             checkResult()
         } else {
-            for box in selectedBoxes {
+            for box in allBoxes {
                 box.isSelected = false
                 delegate?.changeSelectionBoxStatus(at: box.location, to: false)
             }
@@ -88,7 +88,6 @@ final class Game {
     private func checkResult() {
         let traps = selectedBoxes.filter { $0.isSelected && $0.type == .trap }
         let gameResult = traps.isEmpty
-        print("RESULT \(gameResult)")
         delegate?.gameEnded(with: gameResult)
     }
 
@@ -97,8 +96,8 @@ final class Game {
     private func handleBackwardMove(at position: Location) {
         selectedBoxes.removeLast()
         delegate?.changeSelectionBoxStatus(at: currentLocation!, to: false)
+        sortedBoxes[currentLocation!.row][currentLocation!.col].isSelected = false
         currentLocation = position
-        sortedBoxes[position.row][position.col].isSelected = false
     }
 
     private func handleForwardMove(at position: Location) {

@@ -70,8 +70,6 @@ final class MenuScene: SKScene {
         button = ButtonNode(size: size)
         button.position = CGPoint(x: frame.midX, y: frame.midY)
         button.zPosition = 1
-//        button.physicsBody = SKPhysicsBody(rectangleOf: size)
-//        button.physicsBody?.isDynamic = false
         button.setTarget(self, action: #selector(playTapped))
         button.setTitle("KURWY")
         addChild(button)
@@ -86,14 +84,12 @@ final class MenuScene: SKScene {
     }
 
     private func createTrash() -> SKSpriteNode {
-//        let images = ["garbage" ,"Apple", "water","plastic_bottle", "glass_bottle"]
         let images = ["Apple", "plastic_bottle", "glass_bottle", "paper"]
         let random = images.randomElement()!
         let trash = SKSpriteNode(imageNamed: random)
         let size = CGSize(width: 40, height: 80)
         trash.size = size
         trash.zRotation = CGFloat.random(in: 0 ... 360)
-        trash.aspectFitToSize(size)
         let xPosition = GKRandomDistribution(lowestValue: Int(frame.minX),
                                              highestValue: Int(frame.maxX))
         trash.position = CGPoint(x: CGFloat(xPosition.nextInt()),
