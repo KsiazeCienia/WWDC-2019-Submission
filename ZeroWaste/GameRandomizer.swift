@@ -6,85 +6,80 @@
 //  Copyright © 2019 Marcin Włoczko. All rights reserved.
 //
 
-import Foundation
+import GameplayKit
 
 final class GameRandomizer {
 
-    private var topLeftSector: Sector = Sector(boxes: [])
-    private var topRightSector: Sector = Sector(boxes: [])
-    private var bottomLeftSector: Sector = Sector(boxes: [])
-    private var bottomRightSector: Sector = Sector(boxes: [])
-    private var sectors: [Sector] {
-        return [topLeftSector, topRightSector, bottomRightSector, bottomLeftSector]
-    }
-
-    private struct Sector {
-        var boxes: [Box]
-    }
-
     func prepareGame(for board: Board, numberOfTraps: Int) -> [[Box]] {
-        let boxes = createBoxes(for: board)
-        splitToSectors(boxes: boxes)
-        let typedSectors = assignTypes(to: sectors, numberOfTraps: numberOfTraps)
-        return typedSectors.flatMap { $0.boxes }.sort()
+        var graph: GKGridGraph<GKGridGraphNode>
+        var readyBoxes:[[Box]] = []
+        while true {
+            let boxes = createBoxes(for: board)
+            graph = GKGridGraph(nodes: boxes.flatMap{ $0 }.map { $0.node })
+            if let randomizeBoxes = GameRandomizer().randomize(boxes: boxes.flatMap{ $0 }, numberOfTraps: numberOfTraps, graph: graph) {
+                readyBoxes = randomizeBoxes
+                break
+            }
+        }
+        return readyBoxes
     }
 
-    private func createBoxes(for board: Board) -> [Box] {
-        var boxes: [Box] = []
+    func createBoxes(for board: Board) -> [[Box]] {
+        var boxes: [[Box]] = []
         for i in 0 ..< board.rows {
+            var boxRow: [Box] = []
             for j in 0 ..< board.cols {
                 let position = Location(row: i, col: j)
-                let box = Box(position: position)
-                boxes.append(box)
+                let node = GKGraphNode()
+                if i != 0 {
+                    let top = boxes[i - 1][j].node
+                    node.addConnections(to: [top], bidirectional: true)
+                }
+                if j != 0 {
+                    let left = boxRow[j - 1].node
+                    node.addConnections(to: [left], bidirectional: true)
+                }
+                let box = Box(position: position, node: node)
+                boxRow.append(box)
             }
+            boxes.append(boxRow)
         }
         return boxes
     }
 
-    private func splitToSectors(boxes: [Box]) {
-        let maxBox = boxes.max(by: { $1.location > $0.location })!
-        let midRow = maxBox.location.row / 2
-        let midCol = maxBox.location.col / 2
-        for box in boxes {
-            let location = box.location
-            if location.row <= midRow && location.col <= midCol {
-                topLeftSector.boxes.append(box)
-            } else if location.row <= midRow && location.col > midCol {
-                topRightSector.boxes.append(box)
-            } else if location.col <= midCol {
-                bottomLeftSector.boxes.append(box)
+    func randomize(boxes: [Box], numberOfTraps: Int, graph: GKGridGraph<GKGridGraphNode>) -> [[Box]]? {
+        var mutableBoxes = boxes
+        let mutableGraph = graph
+        var finalBoxes: [Box] = []
+        for _ in 0 ..< numberOfTraps {
+            let box = mutableBoxes.dropRandom()
+            box.type = .trap
+            mutableGraph.remove([box.node])
+            finalBoxes.append(box)
+        }
+
+        var isDone: Bool = false
+
+        while !isDone {
+            let start = mutableBoxes.dropRandom()
+            let end = mutableBoxes.dropRandom()
+            let path = mutableGraph.findPath(from: start.node, to: end.node)
+            if path.isEmpty {
+                isDone = true
+                return nil
+            } else if path.count < 6 || path.count > 12 {
+                mutableBoxes.append(start)
+                mutableBoxes.append(end)
+                continue
             } else {
-                bottomRightSector.boxes.append(box)
+                start.type = .start
+                end.type = .end
+                finalBoxes.append(contentsOf: [start, end])
+                isDone = true
             }
         }
-    }
 
-    private func assignTypes(to sectors: [Sector], numberOfTraps: Int) -> [Sector] {
-
-        let startIndex = Int.random(in: 0 ..< sectors.count)
-        let startSector = sectors[startIndex]
-        assignTypeTo(.start, randomElementIn: startSector)
-
-        let endIndex = startIndex >= (sectors.count / 2) ? startIndex - 2 : startIndex + 2
-        let endSector = sectors[endIndex]
-        assignTypeTo(.end, randomElementIn: endSector)
-
-        let shuffledSectors = sectors.shuffled()
-        for i in 0 ..< numberOfTraps {
-            let index = i % shuffledSectors.count
-            assignTypeTo(.trap, randomElementIn: shuffledSectors[index])
-        }
-
-        return shuffledSectors
-    }
-
-    private func assignTypeTo(_ type: BoxType, randomElementIn sector: Sector) {
-        var operationDone: Bool = false
-        while !operationDone {
-            let box = sector.boxes.randomElement()!
-            guard box.type == .standard else { continue }
-            box.type = type
-            operationDone = true
-        }
+        finalBoxes.append(contentsOf: mutableBoxes)
+        return finalBoxes.sort()
     }
 }

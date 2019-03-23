@@ -124,6 +124,10 @@ final class BoardNode: SKSpriteNode {
         let y = frame.minY + CGFloat(location.col) * (size.height + itemSpacing) + itemSpacing + size.height * 0.5
         return CGPoint(x: x, y: y)
     }
+
+    private func animateWin() {
+
+    }
 }
 
 extension BoardNode: GameDelegate {

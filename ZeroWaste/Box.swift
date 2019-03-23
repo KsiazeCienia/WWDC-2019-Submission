@@ -6,18 +6,20 @@
 //  Copyright © 2019 Marcin Włoczko. All rights reserved.
 //
 
-import Foundation
+import GameplayKit
 
 final class Box {
 
     let location: Location
+    let node: GKGraphNode
     var isSelected: Bool
     var type: BoxType
 
-    init(position: Location) {
+    init(position: Location, node: GKGraphNode) {
         self.location = position
         self.isSelected = false
         self.type = .standard
+        self.node = node
     }
 }
 
