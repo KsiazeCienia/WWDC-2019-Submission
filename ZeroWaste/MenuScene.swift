@@ -18,11 +18,11 @@ final class MenuScene: SKScene {
     // MARk: - Constants
 
     private let dropDuration: TimeInterval = 0.1
-    private let trashLimit: Int = 40
+
     // MARK: - Variables
 
     private var timer: Timer!
-    private var trashCounter: Int = 0
+    private var screenFilledArea: CGFloat = 0
 
     // MARK: - Scene's life cycle
 
@@ -30,6 +30,18 @@ final class MenuScene: SKScene {
         setupWorld()
         setupButton()
         setupTimer()
+    }
+
+    // MARk: - Logic
+
+    private func incrementFilledSize(with size: CGSize) {
+        let area = size.width * size.height
+        screenFilledArea += area
+    }
+
+    private func isFilled() -> Bool {
+        let screenArea = UIScreen.main.bounds.size.height * UIScreen.main.bounds.size.width
+        return (screenFilledArea / screenArea) > 0.9
     }
 
     // MARK: - Event handlers
@@ -46,13 +58,14 @@ final class MenuScene: SKScene {
 
     @objc
     private func dropTrash() {
-        guard trashCounter < trashLimit else {
+        guard !isFilled() else {
             timer.invalidate()
             return
         }
+
         let trash = createTrash()
+        incrementFilledSize(with: trash.size)
         addChild(trash)
-        trashCounter = trashCounter + 1
     }
 
     // MARK: - Setup
