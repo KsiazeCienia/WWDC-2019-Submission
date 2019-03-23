@@ -21,9 +21,9 @@ extension SKSpriteNode {
         self.setScale(scaleRatio)
     }
 
-    func scaleToFit(size: CGSize, texture: SKTexture) -> CGFloat {
-        let verticalRatio = size.height / texture.size().height
-        let horizontalRatio = size.width / texture.size().width
+    func scaleToFit(size: CGSize, texture: SKTexture, offset: CGFloat = 0) -> CGFloat {
+        let verticalRatio = (size.height - offset) / texture.size().height
+        let horizontalRatio = (size.width - offset) / texture.size().width
         let scaleRatio = min(verticalRatio, horizontalRatio)
         return scaleRatio
     }
