@@ -103,6 +103,7 @@ final class MenuScene: SKScene {
         let size = CGSize(width: 40, height: 80)
         trash.size = size
         trash.zRotation = CGFloat.random(in: 0 ... 360)
+        trash.aspectFillToSize(fillSize: size)
         let xPosition = GKRandomDistribution(lowestValue: Int(frame.minX),
                                              highestValue: Int(frame.maxX))
         trash.position = CGPoint(x: CGFloat(xPosition.nextInt()),
