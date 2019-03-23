@@ -11,13 +11,19 @@ import GameplayKit
 
 final class GameScene: SKScene {
 
+    struct GameSettings {
+        static let prepareTimer: Int = 3
+        static let numberOfRounds: Int = 5
+    }
+
     // MARK: - Views
 
     private var boardNode: BoardNode!
     private let label = SKLabelNode(fontNamed: "AvenirNext-Bold")
     private var timer: Timer?
-    private var counter: Int = 0
     private let prepareTime: Int = 3
+    private var counter: Int = 0
+    private var roundCounter: Int = 0
 
     // MARK: - Variables
 
@@ -28,6 +34,7 @@ final class GameScene: SKScene {
     override func didMove(to view: SKView) {
         setupBoard()
         setupLabel()
+        roundCounter += 1
         animateLabel { [unowned self] in
             self.turnOnCountDown()
             self.boardNode?.displayTraps()
@@ -55,10 +62,10 @@ final class GameScene: SKScene {
         }
     }
 
-    private func animateLabel(completion: (() -> Void)? = nil) {
+    private func animateLabel(hangeTime: Double = 0.6, completion: (() -> Void)? = nil) {
         let duration = 0.2
         let show = showAction(with: duration)
-        let wait = SKAction.wait(forDuration: 0.6)
+        let wait = SKAction.wait(forDuration: hangeTime)
         let hide = hideAction(with: duration)
         let actions = SKAction.sequence([show, wait, hide])
         label.run(actions) {
@@ -94,7 +101,7 @@ final class GameScene: SKScene {
 
     private func setupLabel() {
         addChild(label)
-        label.text = "Prepare"
+        label.text = "Get ready!"
         label.position = CGPoint(x: frame.midX, y: frame.maxY - 100)
         label.setScale(0.5)
         label.run(SKAction.fadeOut(withDuration: 0))
@@ -102,12 +109,18 @@ final class GameScene: SKScene {
 }
 
 extension GameScene: BoardNodeDelegate {
-    func gameEnded() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.boardNode.prepareNewGame()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.boardNode.displayTraps()
-                self.turnOnCountDown()
+    func gameEnded(with result: Bool) {
+        if roundCounter == GameSettings.numberOfRounds {
+
+        } else {
+            label.text = result ? "Correct!" : "Incorrect!"
+            animateLabel(hangeTime: 2.6) {
+                self.roundCounter += 1
+                self.boardNode.prepareNewGame()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.boardNode.displayTraps()
+                    self.turnOnCountDown()
+                }
             }
         }
     }

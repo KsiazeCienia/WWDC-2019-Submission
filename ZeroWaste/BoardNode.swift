@@ -9,7 +9,7 @@
 import SpriteKit
 
 protocol BoardNodeDelegate: class {
-    func gameEnded()
+    func gameEnded(with result: Bool)
 }
 
 final class BoardNode: SKSpriteNode {
@@ -128,16 +128,12 @@ final class BoardNode: SKSpriteNode {
         let y = frame.minY + CGFloat(location.col) * (size.height + itemSpacing) + itemSpacing + size.height * 0.5
         return CGPoint(x: x, y: y)
     }
-
-    private func animateWin() {
-
-    }
 }
 
 extension BoardNode: GameDelegate {
     func gameEnded(with result: Bool) {
         boxes.forEach { $0.updatePhase(.end) }
-        delegate?.gameEnded()
+        delegate?.gameEnded(with: result)
     }
 
     func changeSelectionBoxStatus(at position: Location, to value: Bool) {
