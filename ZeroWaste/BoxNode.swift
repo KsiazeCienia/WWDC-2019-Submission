@@ -38,8 +38,9 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     init(box: Box, location: Location, size: CGSize) {
         self.location = location
+        self.box = box
         super.init(texture: nil, color: .clear, size: size)
-        setup(with: box)
+        texture = SKTexture(imageNamed: "dirt")
         setupAsset()
     }
 
@@ -52,11 +53,6 @@ final class BoxNode: SKSpriteNode, Localizable {
     func update(with box: Box) {
         self.box = box
         isSelected = false
-        hideAsset(with: animationDuration)
-//        hideAsset(with: animationDuration) {
-//            self.removeChildren(in: [assetNode])
-//            self.setupAsset()
-//        }
     }
 
 
@@ -74,12 +70,6 @@ final class BoxNode: SKSpriteNode, Localizable {
     }
 
     // MARK: - Private
-
-    private func setup(with box: Box) {
-        self.box = box
-        let imageName = box.isSelected ? "grass" : "dirt"
-        texture = SKTexture(imageNamed: imageName)
-    }
 
     private func hideAsset(with duration: Double, completion: (() -> Void)? = nil) {
         let fadeOut = SKAction.fadeOut(withDuration: duration)
@@ -106,7 +96,7 @@ final class BoxNode: SKSpriteNode, Localizable {
     }
 
     private func setupForInitialMode() {
-//        hideAsset(with: 0)
+        hideAsset(with: animationDuration)
     }
 
     private func setupForPrepareMode() {
