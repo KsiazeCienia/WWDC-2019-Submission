@@ -71,7 +71,6 @@ final class MenuScene: SKScene {
     // MARK: - Setup
 
     private func setupWorld() {
-        backgroundColor = .lightGray
         view?.showsFPS = true
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         physicsBody?.isDynamic = false

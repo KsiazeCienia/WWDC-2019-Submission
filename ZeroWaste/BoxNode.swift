@@ -17,6 +17,7 @@ final class BoxNode: SKSpriteNode, Localizable {
     // MARK: - Views
 
     private var assetNode: LocalizedNode!
+    private var selectedNode: LocalizedNode!
 
     // MARK: - Constants
 
@@ -29,8 +30,7 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     var isSelected: Bool = false {
         didSet {
-            let imageName = isSelected ? "grass" : "dirt"
-            texture = SKTexture(imageNamed: imageName)
+            updateSelectedState()
         }
     }
 
@@ -41,6 +41,7 @@ final class BoxNode: SKSpriteNode, Localizable {
         self.box = box
         super.init(texture: nil, color: .clear, size: size)
         texture = SKTexture(imageNamed: "dirt")
+        setupSelectedNode()
         setupAsset()
     }
 
@@ -52,7 +53,6 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     func update(with box: Box) {
         self.box = box
-        isSelected = false
     }
 
 
@@ -69,13 +69,24 @@ final class BoxNode: SKSpriteNode, Localizable {
         }
     }
 
-    // MARK: - Private
+    // MARK: - Logic
+
+    private func updateSelectedState() {
+        if isSelected {
+            let texture = SKTexture(imageNamed: "grass")
+            showSelectedNode(duration: 0, texture: texture)
+        } else {
+            hideSelectedNode(duration: 0)
+        }
+    }
+
+    // MARK: - Animations
 
     private func hideAsset(with duration: Double, completion: (() -> Void)? = nil) {
         let fadeOut = SKAction.fadeOut(withDuration: duration)
         let scale = SKAction.scale(to: size, duration: 0)
         let actions = SKAction.sequence([fadeOut, scale])
-        assetNode?.run(actions, completion: {
+        assetNode.run(actions, completion: {
             completion?()
         })
     }
@@ -86,20 +97,42 @@ final class BoxNode: SKSpriteNode, Localizable {
         let rescale = SKAction.scale(to: scale, duration: 0)
         let fadeIn = SKAction.fadeIn(withDuration: duration)
         let actions = SKAction.sequence([showTexture, rescale, fadeIn])
-        assetNode?.run(actions)
+        assetNode.run(actions)
+    }
+
+    private func showSelectedNode(duration: Double, texture: SKTexture) {
+        let showTexture = SKAction.setTexture(texture)
+        let fadeIn = SKAction.fadeIn(withDuration: duration)
+        let actions = SKAction.sequence([showTexture, fadeIn])
+        selectedNode.run(actions)
+    }
+
+    private func hideSelectedNode(duration: Double) {
+        let fadeOut = SKAction.fadeOut(withDuration: duration)
+        selectedNode.run(fadeOut)
+    }
+
+    // MARK: - Setup
+
+    private func setupSelectedNode() {
+        selectedNode = LocalizedNode(color: .clear, size: size)
+        selectedNode.location = location
+        selectedNode.position = .zero
+        addChild(selectedNode)
     }
 
     private func setupAsset() {
         assetNode = LocalizedNode(color: .clear, size: size)
-        assetNode?.location = location
-        assetNode?.position = .zero
-        assetNode?.isUserInteractionEnabled = false
-        addChild(assetNode!)
+        assetNode.location = location
+        assetNode.position = .zero
+        assetNode.isUserInteractionEnabled = false
+        addChild(assetNode)
         hideAsset(with: 0)
     }
 
     private func setupForInitialMode() {
         hideAsset(with: animationDuration)
+        hideSelectedNode(duration: animationDuration)
     }
 
     private func setupForPrepareMode() {
@@ -136,7 +169,7 @@ final class BoxNode: SKSpriteNode, Localizable {
             showAsset(with: animationDuration, with: SKTexture(imageNamed: imageString))
         }
         if box.type == .trap && isSelected {
-            texture = SKTexture(imageNamed: "wrong")
+            selectedNode.texture = SKTexture(imageNamed: "wrong")
         }
     }
 

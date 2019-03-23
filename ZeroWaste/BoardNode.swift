@@ -57,26 +57,22 @@ final class BoardNode: SKSpriteNode {
         changeBoxMode(to: .initial)
     }
 
-    func startGame() {
-        turnOnPrepareMode()
-        Timer.scheduledTimer(timeInterval: prepareTime, target: self, selector: #selector(turnOnPlayMode), userInfo: nil, repeats: false)
-    }
-
     func displayTraps() {
         changeBoxMode(to: .prepare)
+    }
+
+    func turnOnPlayMode() {
+        changeBoxMode(to: .play)
     }
 
     private func changeBoxMode(to phase: GamePhase) {
         boxes.forEach { $0.updatePhase(phase) }
     }
 
-    @objc
-    func turnOnPlayMode() {
-        changeBoxMode(to: .play)
-    }
+    // MARK: - Animations
 
-    private func turnOnPrepareMode() {
-        changeBoxMode(to: .prepare)
+    private func winAnimation() {
+        
     }
 
     // MARK: - Event handlers
