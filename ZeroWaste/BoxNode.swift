@@ -52,11 +52,11 @@ final class BoxNode: SKSpriteNode, Localizable {
     func update(with box: Box) {
         self.box = box
         isSelected = false
-        if let assetNode = assetNode {
-            removeChildren(in: [assetNode])
-            self.assetNode = nil
-        }
-        setupAsset()
+        hideAsset(with: animationDuration)
+//        hideAsset(with: animationDuration) {
+//            self.removeChildren(in: [assetNode])
+//            self.setupAsset()
+//        }
     }
 
 
@@ -88,21 +88,21 @@ final class BoxNode: SKSpriteNode, Localizable {
         })
     }
 
-    private func showAsset(with duration: Double) {
+    private func showAsset(with duration: Double, with texture: SKTexture) {
+        let showTexture = SKAction.setTexture(texture)
         let fadeIn = SKAction.fadeIn(withDuration: duration)
-        assetNode?.run(fadeIn)
+        let actions = SKAction.sequence([showTexture, fadeIn])
+        assetNode?.run(actions)
     }
 
     private func setupAsset() {
-        guard box.type != .standard else { return }
-        let imageString = imageAsset(for: box.type)
-        assetNode = LocalizedNode(imageNamed: imageString)
+        assetNode = LocalizedNode(color: .clear, size: size)
         assetNode?.location = location
         assetNode?.position = .zero
         assetNode?.size = size
         assetNode?.isUserInteractionEnabled = false
-        hideAsset(with: 0)
         addChild(assetNode!)
+        hideAsset(with: 0)
     }
 
     private func setupForInitialMode() {
@@ -116,7 +116,8 @@ final class BoxNode: SKSpriteNode, Localizable {
         case .start, .end:
             hideAsset(with: animationDuration)
         case .trap:
-            showAsset(with: animationDuration)
+            let texture = SKTexture(imageNamed: "trap")
+            showAsset(with: animationDuration, with: texture)
         }
     }
 
@@ -126,7 +127,9 @@ final class BoxNode: SKSpriteNode, Localizable {
             return
         case .start, .end:
             DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
-                self.showAsset(with: self.animationDuration)
+                if let imageString = self.imageAsset(for: self.box.type) {
+                    self.showAsset(with: self.animationDuration, with: SKTexture(imageNamed: imageString))
+                }
             }
         case .trap:
             hideAsset(with: animationDuration)
@@ -135,17 +138,19 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     private func setupForEndMode() {
         guard box.type != .standard else { return }
-        showAsset(with: animationDuration)
+        if let imageString = imageAsset(for: box.type) {
+            showAsset(with: animationDuration, with: SKTexture(imageNamed: imageString))
+        }
         if box.type == .trap && isSelected {
             texture = SKTexture(imageNamed: "wrong")
         }
     }
 
-    private func imageAsset(for type: BoxType) -> String {
+    private func imageAsset(for type: BoxType) -> String? {
         var imageAsset: String
         switch box.type {
         case .standard:
-            imageAsset = ""
+            return nil
         case .start:
             imageAsset = "plastic_bottle"
         case .end:
