@@ -16,7 +16,7 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     // MARK: - Views
 
-    private var assetNode: LocalizedNode?
+    private var assetNode: LocalizedNode!
 
     // MARK: - Constants
 
@@ -73,15 +73,19 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     private func hideAsset(with duration: Double, completion: (() -> Void)? = nil) {
         let fadeOut = SKAction.fadeOut(withDuration: duration)
-        assetNode?.run(fadeOut, completion: {
+        let scale = SKAction.scale(to: size, duration: 0)
+        let actions = SKAction.sequence([fadeOut, scale])
+        assetNode?.run(actions, completion: {
             completion?()
         })
     }
 
     private func showAsset(with duration: Double, with texture: SKTexture) {
-        let showTexture = SKAction.setTexture(texture)
+        let showTexture = SKAction.setTexture(texture, resize: true)
+        let scale = assetNode.scaleToFit(size: size, texture: texture)
+        let rescale = SKAction.scale(to: scale, duration: 0)
         let fadeIn = SKAction.fadeIn(withDuration: duration)
-        let actions = SKAction.sequence([showTexture, fadeIn])
+        let actions = SKAction.sequence([showTexture, rescale, fadeIn])
         assetNode?.run(actions)
     }
 
@@ -89,7 +93,6 @@ final class BoxNode: SKSpriteNode, Localizable {
         assetNode = LocalizedNode(color: .clear, size: size)
         assetNode?.location = location
         assetNode?.position = .zero
-        assetNode?.size = size
         assetNode?.isUserInteractionEnabled = false
         addChild(assetNode!)
         hideAsset(with: 0)
@@ -118,7 +121,8 @@ final class BoxNode: SKSpriteNode, Localizable {
         case .start, .end:
             DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
                 if let imageString = self.imageAsset(for: self.box.type) {
-                    self.showAsset(with: self.animationDuration, with: SKTexture(imageNamed: imageString))
+                    let texture = SKTexture(imageNamed: imageString)
+                    self.showAsset(with: self.animationDuration, with: texture)
                 }
             }
         case .trap:
