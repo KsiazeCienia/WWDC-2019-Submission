@@ -15,6 +15,9 @@ final class GameScene: SKScene {
 
     private var boardNode: BoardNode!
     private let label = SKLabelNode(fontNamed: "AvenirNext-Bold")
+    private var timer: Timer?
+    private var counter: Int = 0
+    private let prepareTime: Int = 3
 
     // MARK: - Variables
 
@@ -25,20 +28,41 @@ final class GameScene: SKScene {
     override func didMove(to view: SKView) {
         setupBoard()
         setupLabel()
-        animateLabel()
-//        boardNode.startGame()
+        animateLabel { [unowned self] in
+            self.turnOnCountDown()
+            self.boardNode?.displayTraps()
+        }
     }
 
     // MARK: - Logic
 
-    private func animateLabel() {
-        let duration = 0.3
+    private func turnOnCountDown() {
+        counter = prepareTime
+        self.label.text = String(self.counter)
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
+    }
+
+    @objc
+    private func updateCounter() {
+        if counter == 1 {
+            timer?.invalidate()
+            boardNode.turnOnPlayMode()
+        } else {
+            animateLabel {
+                self.counter -= 1
+                self.label.text = String(self.counter)
+            }
+        }
+    }
+
+    private func animateLabel(completion: (() -> Void)? = nil) {
+        let duration = 0.2
         let show = showAction(with: duration)
-        let wait = SKAction.wait(forDuration: 0.7)
+        let wait = SKAction.wait(forDuration: 0.6)
         let hide = hideAction(with: duration)
         let actions = SKAction.sequence([show, wait, hide])
-        label.run(actions) { [unowned self] in
-            self.boardNode.startGame()
+        label.run(actions) {
+            completion?()
         }
     }
 
@@ -79,7 +103,12 @@ final class GameScene: SKScene {
 
 extension GameScene: BoardNodeDelegate {
     func gameEnded() {
-        boardNode.prepareNewGame()
-        animateLabel()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.boardNode.prepareNewGame()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.boardNode.displayTraps()
+                self.turnOnCountDown()
+            }
+        }
     }
 }

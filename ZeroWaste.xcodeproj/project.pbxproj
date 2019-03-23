@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C1195309224674CA00B79BB2 /* wrong.png in Resources */ = {isa = PBXBuildFile; fileRef = C1195308224674CA00B79BB2 /* wrong.png */; };
 		C18277DC223FB72D00209369 /* BoxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18277DB223FB72D00209369 /* BoxNode.swift */; };
 		C18277DE22401C3300209369 /* GameRandomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18277DD22401C3300209369 /* GameRandomizer.swift */; };
 		C186CC33223D92E200EF9BC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C186CC32223D92E200EF9BC2 /* AppDelegate.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C1195308224674CA00B79BB2 /* wrong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wrong.png; sourceTree = "<group>"; };
 		C18277DB223FB72D00209369 /* BoxNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxNode.swift; sourceTree = "<group>"; };
 		C18277DD22401C3300209369 /* GameRandomizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRandomizer.swift; sourceTree = "<group>"; };
 		C186CC2F223D92E200EF9BC2 /* ZeroWaste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroWaste.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,6 +125,7 @@
 				C1D926822242FA490006E4F3 /* trash.png */,
 				C1D9267C2242E97B0006E4F3 /* paper.png */,
 				C1D926702242DA8E0006E4F3 /* Apple.png */,
+				C1195308224674CA00B79BB2 /* wrong.png */,
 				C1D9265422417DD70006E4F3 /* water.png */,
 				C1D9265A224180A10006E4F3 /* trap.png */,
 				C1D926722242DAFC0006E4F3 /* garbage.png */,
@@ -209,6 +212,7 @@
 				C1D9267D2242E97C0006E4F3 /* paper.png in Resources */,
 				C1D9267B2242E53B0006E4F3 /* glass_bottle.png in Resources */,
 				C1D926832242FA490006E4F3 /* trash.png in Resources */,
+				C1195309224674CA00B79BB2 /* wrong.png in Resources */,
 				C1D926732242DAFC0006E4F3 /* garbage.png in Resources */,
 				C186CC40223D92E300EF9BC2 /* Assets.xcassets in Resources */,
 				C1D926812242F8860006E4F3 /* dirt.png in Resources */,

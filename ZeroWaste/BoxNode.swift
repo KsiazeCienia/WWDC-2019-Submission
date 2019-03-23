@@ -57,24 +57,19 @@ final class BoxNode: SKSpriteNode, Localizable {
             self.assetNode = nil
         }
         setupAsset()
-//        setupAsset()
-//        assetNode?.texture = nil
-//        let imageString = imageAsset(for: box.type)
-//        assetNode?.texture = SKTexture(imageNamed: imageString)
-//        hideAsset(with: 0)
     }
 
 
     func updatePhase(_ phase: GamePhase) {
         switch phase {
+        case .initial:
+            setupForInitialMode()
         case .prepare:
             setupForPrepareMode()
         case .play:
             setupForPlayMode()
         case .end:
             setupForEndMode()
-        case .initial:
-            setupForInitialMode()
         }
     }
 
@@ -86,9 +81,11 @@ final class BoxNode: SKSpriteNode, Localizable {
         texture = SKTexture(imageNamed: imageName)
     }
 
-    private func hideAsset(with duration: Double) {
+    private func hideAsset(with duration: Double, completion: (() -> Void)? = nil) {
         let fadeOut = SKAction.fadeOut(withDuration: duration)
-        assetNode?.run(fadeOut)
+        assetNode?.run(fadeOut, completion: {
+            completion?()
+        })
     }
 
     private func showAsset(with duration: Double) {
@@ -128,7 +125,9 @@ final class BoxNode: SKSpriteNode, Localizable {
         case .standard:
             return
         case .start, .end:
-            showAsset(with: animationDuration)
+            DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
+                self.showAsset(with: self.animationDuration)
+            }
         case .trap:
             hideAsset(with: animationDuration)
         }
@@ -136,7 +135,10 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     private func setupForEndMode() {
         guard box.type != .standard else { return }
-        texture = SKTexture(imageNamed: imageAsset(for: box.type))
+        showAsset(with: animationDuration)
+        if box.type == .trap && isSelected {
+            texture = SKTexture(imageNamed: "wrong")
+        }
     }
 
     private func imageAsset(for type: BoxType) -> String {
