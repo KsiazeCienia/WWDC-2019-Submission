@@ -41,7 +41,7 @@ final class MenuScene: SKScene {
 
     private func isFilled() -> Bool {
         let screenArea = UIScreen.main.bounds.size.height * UIScreen.main.bounds.size.width
-        return (screenFilledArea / screenArea) > 0.9
+        return (screenFilledArea / screenArea) > 0.85
     }
 
     // MARK: - Event handlers
@@ -99,7 +99,9 @@ final class MenuScene: SKScene {
         let images = ["Apple", "plastic_bottle", "glass_bottle", "paper"]
         let random = images.randomElement()!
         let trash = SKSpriteNode(imageNamed: random)
-        let size = CGSize(width: 40, height: 80)
+        print(UIScreen.main.bounds)
+        let scale = UIScreen.main.bounds.height / 667
+        let size = CGSize(width: 40 * scale, height: 80 * scale)
         trash.size = size
         trash.zRotation = CGFloat.random(in: 0 ... 360)
         trash.aspectFillToSize(fillSize: size)

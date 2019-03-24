@@ -14,6 +14,7 @@ final class GameScene: SKScene {
     struct GameSettings {
         static let prepareTimer: Int = 3
         static let numberOfRounds: Int = 5
+        static let board: Board = Board(rows: 5, cols: 5)
     }
 
     // MARK: - Views
