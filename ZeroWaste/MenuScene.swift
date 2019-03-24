@@ -42,6 +42,7 @@ public final class MenuScene: SKScene {
             fillScreenWithTrashes()
             setupFinalLabel()
         }
+        setupEarth()
         setupLogo()
         setupWorld()
     }
@@ -99,6 +100,14 @@ public final class MenuScene: SKScene {
 
     // MARK: - Setup
 
+    private func setupEarth() {
+        let texture = SKTexture(imageNamed: "earth")
+        let size = CGSize(width: 250 * scale, height: 250 * scale)
+        let earth = SKSpriteNode(texture: texture, color: .clear, size: size)
+        earth.position = CGPoint(x: frame.midX, y: frame.midY)
+        addChild(earth)
+    }
+
     private func setupFinalLabel() {
         let label = SKLabelNode(fontNamed: "AvenirNext-Bold")
         label.text = "Congratulations \nyou cleanup the Earth!"
@@ -142,7 +151,7 @@ public final class MenuScene: SKScene {
         let label = SKLabelNode(fontNamed: "AvenirNext-Bold")
         label.text = "Zero Waste"
         label.fontSize = 50 * scale
-        label.position = CGPoint(x: frame.midX, y: frame.maxY - 200 * scale)
+        label.position = CGPoint(x: frame.midX, y: frame.maxY - 150 * scale)
         addChild(label)
     }
 
@@ -157,7 +166,7 @@ public final class MenuScene: SKScene {
         let size = CGSize(width: 300 * scale, height: 70 * scale)
         let texture = SKTexture(imageNamed: "cleanup")
         button = ButtonNode(size: size, texture: texture)
-        button.position = CGPoint(x: frame.midX, y: frame.midY)
+        button.position = CGPoint(x: frame.midX, y: frame.minY + 80 * scale)
         button.zPosition = 1
         button.setTarget(self, action: #selector(playTapped))
         button.setTitle("Cleanup the Earth")
