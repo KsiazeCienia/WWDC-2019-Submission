@@ -17,23 +17,23 @@ public enum GameLevel: String {
         switch self {
         case .easy:
             let board = Board(rows: 5, cols: 5)
-            let settings = GameSettings(prepareTime: 5,
+            let settings = GameSettings(prepareTime: 3,
                                         numberOfRounds: 5,
                                         numberOfTraps: 5,
                                         board: board)
             return settings
         case .medium:
-            let board = Board(rows: 5, cols: 5)
+            let board = Board(rows: 5, cols: 6)
             let settings = GameSettings(prepareTime: 3,
-                                        numberOfRounds: 3,
-                                        numberOfTraps: 7,
+                                        numberOfRounds: 5,
+                                        numberOfTraps: 8,
                                         board: board)
             return settings
         case .hard:
             let board = Board(rows: 6, cols: 6)
             let settings = GameSettings(prepareTime: 3,
                                         numberOfRounds: 5,
-                                        numberOfTraps: 9,
+                                        numberOfTraps: 10,
                                         board: board)
             return settings
         }
