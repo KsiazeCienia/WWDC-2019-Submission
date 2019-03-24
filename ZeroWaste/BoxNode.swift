@@ -22,6 +22,7 @@ final class BoxNode: SKSpriteNode, Localizable {
     // MARK: - Constants
 
     private let animationDuration: Double = 0.5
+    private let scale = UIScreen.main.bounds.height / 667
 
     // MARK: - Variable
 
@@ -93,7 +94,7 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     private func showAsset(with duration: Double, with texture: SKTexture) {
         let showTexture = SKAction.setTexture(texture, resize: true)
-        let scale = assetNode.scaleToFit(size: size, texture: texture, offset: 15)
+        let scale = assetNode.scaleToFit(size: size, texture: texture, offset: 15 * self.scale)
         let rescale = SKAction.scale(to: scale, duration: 0)
         let fadeIn = SKAction.fadeIn(withDuration: duration)
         let actions = SKAction.sequence([showTexture, rescale, fadeIn])

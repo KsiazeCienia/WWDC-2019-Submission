@@ -29,6 +29,7 @@ final class GameScene: SKScene {
     // MARK: - Variables
 
     var board: Board = Board(rows: 5, cols: 5)
+    private let scale = UIScreen.main.bounds.height / 667
 
     // MARk: - Scene life cycle
     
@@ -93,17 +94,18 @@ final class GameScene: SKScene {
     // MARK: - Setup
 
     private func setupBoard() {
-        let size = CGSize(width: frame.width - 30, height: frame.width - 30)
+        let size = CGSize(width: frame.width - 30 * scale, height: frame.width - 30 * scale)
         boardNode = BoardNode(board: board, size: size)
         boardNode.delegate = self
-        boardNode.position = CGPoint(x: frame.midX, y: frame.midY)
+        boardNode.position = CGPoint(x: frame.midX, y: frame.midY - 50 * scale)
         addChild(boardNode)
     }
 
     private func setupLabel() {
         addChild(label)
         label.text = "Get ready!"
-        label.position = CGPoint(x: frame.midX, y: frame.maxY - 100)
+        label.fontSize = 25 * scale
+        label.position = CGPoint(x: frame.midX, y: frame.maxY - 100 * scale)
         label.setScale(0.5)
         label.run(SKAction.fadeOut(withDuration: 0))
     }

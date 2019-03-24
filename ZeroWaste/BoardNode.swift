@@ -16,7 +16,8 @@ final class BoardNode: SKSpriteNode {
 
     // MARK: - Constants
 
-    private let itemSpacing: CGFloat = 5
+    private let scale = UIScreen.main.bounds.height / 667
+    private lazy var itemSpacing: CGFloat = 5 * scale
     private let prepareTime: TimeInterval = 3
 
     private let board: Board
