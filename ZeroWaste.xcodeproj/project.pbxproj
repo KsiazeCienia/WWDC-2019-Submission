@@ -20,6 +20,8 @@
 		C11D14962248123100691489 /* fail.wav in Resources */ = {isa = PBXBuildFile; fileRef = C11D14952248123100691489 /* fail.wav */; };
 		C11D1499224814FA00691489 /* success.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C11D1498224814FA00691489 /* success.mp3 */; };
 		C11D149B22482E0000691489 /* LevelHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11D149A22482E0000691489 /* LevelHandler.swift */; };
+		C11D149D2248385400691489 /* smieci2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C11D149C2248385300691489 /* smieci2.mp3 */; };
+		C11D149F224838DD00691489 /* garbage.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C11D149E224838DD00691489 /* garbage.mp3 */; };
 		C18277DC223FB72D00209369 /* BoxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18277DB223FB72D00209369 /* BoxNode.swift */; };
 		C18277DE22401C3300209369 /* GameRandomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18277DD22401C3300209369 /* GameRandomizer.swift */; };
 		C186CC33223D92E200EF9BC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C186CC32223D92E200EF9BC2 /* AppDelegate.swift */; };
@@ -67,6 +69,8 @@
 		C11D14952248123100691489 /* fail.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fail.wav; sourceTree = "<group>"; };
 		C11D1498224814FA00691489 /* success.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = success.mp3; sourceTree = "<group>"; };
 		C11D149A22482E0000691489 /* LevelHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelHandler.swift; sourceTree = "<group>"; };
+		C11D149C2248385300691489 /* smieci2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = smieci2.mp3; sourceTree = "<group>"; };
+		C11D149E224838DD00691489 /* garbage.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = garbage.mp3; sourceTree = "<group>"; };
 		C18277DB223FB72D00209369 /* BoxNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxNode.swift; sourceTree = "<group>"; };
 		C18277DD22401C3300209369 /* GameRandomizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRandomizer.swift; sourceTree = "<group>"; };
 		C186CC2F223D92E200EF9BC2 /* ZeroWaste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroWaste.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,9 +151,11 @@
 				C1D9267E2242F8810006E4F3 /* grass.png */,
 				C1D926802242F8860006E4F3 /* dirt.png */,
 				C1D926822242FA490006E4F3 /* trash.png */,
+				C11D149E224838DD00691489 /* garbage.mp3 */,
 				C11953142247BB3100B79BB2 /* done.png */,
 				C1D9267C2242E97B0006E4F3 /* paper.png */,
 				C1D926702242DA8E0006E4F3 /* Apple.png */,
+				C11D149C2248385300691489 /* smieci2.mp3 */,
 				C1195308224674CA00B79BB2 /* wrong.png */,
 				C11953102247B57A00B79BB2 /* summary.png */,
 				C1D9265422417DD70006E4F3 /* water.png */,
@@ -249,6 +255,7 @@
 				C1D9267D2242E97C0006E4F3 /* paper.png in Resources */,
 				C1D9267B2242E53B0006E4F3 /* glass_bottle.png in Resources */,
 				C1D926832242FA490006E4F3 /* trash.png in Resources */,
+				C11D149F224838DD00691489 /* garbage.mp3 in Resources */,
 				C1195309224674CA00B79BB2 /* wrong.png in Resources */,
 				C11D149422480F7400691489 /* step_grass.wav in Resources */,
 				C11953152247BB3100B79BB2 /* done.png in Resources */,
@@ -260,6 +267,7 @@
 				C1D9265522417DD70006E4F3 /* water.png in Resources */,
 				C11953192247E66400B79BB2 /* cleanup.png in Resources */,
 				C186CC37223D92E200EF9BC2 /* Actions.sks in Resources */,
+				C11D149D2248385400691489 /* smieci2.mp3 in Resources */,
 				C11D1499224814FA00691489 /* success.mp3 in Resources */,
 				C11D149222480BF300691489 /* count_down.mp3 in Resources */,
 			);

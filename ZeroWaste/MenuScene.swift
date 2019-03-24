@@ -40,6 +40,7 @@ public final class MenuScene: SKScene {
             setupTimer()
         } else {
             fillScreenWithTrashes()
+            setupFinalLabel()
         }
         setupLogo()
         setupWorld()
@@ -53,7 +54,12 @@ public final class MenuScene: SKScene {
 
     override public func didMove(to view: SKView) {
         if mode == .final {
+            let sound = SKAction.playSoundFileNamed("smieci2.mp3", waitForCompletion: false)
+            run(sound)
             physicsBody = nil
+        } else {
+            let sound = SKAction.playSoundFileNamed("garbage.mp3", waitForCompletion: false)
+            run(sound)
         }
     }
 
@@ -92,6 +98,14 @@ public final class MenuScene: SKScene {
     }
 
     // MARK: - Setup
+
+    private func setupFinalLabel() {
+        let label = SKLabelNode(fontNamed: "AvenirNext-Bold")
+        label.text = "Congratulations \nyou cleanup the Earth!"
+        label.fontSize = 30 * scale
+        label.position = CGPoint(x: frame.midX, y: frame.midY)
+        addChild(label)
+    }
 
     private func fillScreenWithTrashes() {
         currentPosition = CGPoint(x: frame.minX, y: frame.minY)
