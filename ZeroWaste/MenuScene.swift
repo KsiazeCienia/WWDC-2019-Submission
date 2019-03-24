@@ -41,6 +41,7 @@ public final class MenuScene: SKScene {
         } else {
             fillScreenWithTrashes()
         }
+        setupLogo()
         setupWorld()
     }
 
@@ -112,6 +113,14 @@ public final class MenuScene: SKScene {
             currentPosition = CGPoint(x: newX, y: newY)
             addChild(trash)
         }
+    }
+
+    private func setupLogo() {
+        let label = SKLabelNode(fontNamed: "AvenirNext-Bold")
+        label.text = "Zero Waste"
+        label.fontSize = 50 * scale
+        label.position = CGPoint(x: frame.midX, y: frame.maxY - 200 * scale)
+        addChild(label)
     }
 
     private func setupWorld() {
