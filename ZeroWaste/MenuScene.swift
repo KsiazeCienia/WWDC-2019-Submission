@@ -50,7 +50,7 @@ final class MenuScene: SKScene {
     private func playTapped() {
         timer.invalidate()
 
-        let gameScene = GameScene(size: size)
+        let gameScene = GameScene(settings: GameLevel.medium.settings(), size: size)
         scene?.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: 1)
         view?.presentScene(gameScene, transition: transition)

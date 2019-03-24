@@ -19,9 +19,6 @@ final class Game {
 
     weak var delegate: GameDelegate?
 
-    var board = Board(rows: 5, cols: 5)
-    var numberOfTraps = 5
-
     // MARK: - Private variables
 
     private var sortedBoxes: [[Box]] = []
@@ -31,12 +28,19 @@ final class Game {
     private var selectedBoxes: [Box] = []
     private var currentLocation: Location?
 
+    private let settings: GameSettings
+
+    init(settings: GameSettings) {
+        self.settings = settings
+    }
+
     // MARK: - Public
 
     func prepareNewGame() {
         selectedBoxes = []
         currentLocation = nil
-        sortedBoxes = GameRandomizer().prepareGame(for: board, numberOfTraps: numberOfTraps)
+        sortedBoxes = GameRandomizer().prepareGame(for: settings.board,
+                                                   numberOfTraps: settings.numberOfTraps)
     }
 
     func box(for position: Location) -> Box {

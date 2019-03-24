@@ -11,26 +11,30 @@ import GameplayKit
 
 final class GameScene: SKScene {
 
-    struct GameSettings {
-        static let prepareTimer: Int = 3
-        static let numberOfRounds: Int = 5
-        static let board: Board = Board(rows: 5, cols: 5)
-    }
-
     // MARK: - Views
 
     private var boardNode: BoardNode!
     private let label = SKLabelNode(fontNamed: "AvenirNext-Bold")
     private var timer: Timer?
-    private let prepareTime: Int = 3
     private var types: [GameType] = [.paper, .metal, .bio, .plastic, .glass].shuffled()
     private var counter: Int = 0
     private var roundCounter: Int = 0
+    private let settings: GameSettings
 
     // MARK: - Variables
 
-    var board: Board = Board(rows: 5, cols: 5)
     private let scale = UIScreen.main.bounds.height / 667
+
+    // MARK: - Initializers
+
+    init(settings: GameSettings, size: CGSize) {
+        self.settings = settings
+        super.init(size: size)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARk: - Scene life cycle
     
@@ -47,7 +51,7 @@ final class GameScene: SKScene {
     // MARK: - Logic
 
     private func turnOnCountDown() {
-        counter = prepareTime
+        counter = settings.prepareTime
         self.label.text = String(self.counter)
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateCounter), userInfo: nil, repeats: true)
     }
@@ -95,8 +99,11 @@ final class GameScene: SKScene {
     // MARK: - Setup
 
     private func setupBoard() {
-        let size = CGSize(width: frame.width - 30 * scale, height: frame.width - 30 * scale)
-        boardNode = BoardNode(board: board, size: size, icons: types[roundCounter].icons())
+        let size = CGSize(width: frame.width - 30 * scale,
+                          height: frame.width - 30 * scale)
+        boardNode = BoardNode(settings: settings,
+                              size: size,
+                              icons: types[roundCounter].icons())
         boardNode.delegate = self
         boardNode.position = CGPoint(x: frame.midX, y: frame.midY - 50 * scale)
         addChild(boardNode)
@@ -114,7 +121,7 @@ final class GameScene: SKScene {
 
 extension GameScene: BoardNodeDelegate {
     func gameEnded(with result: Bool) {
-        if roundCounter == GameSettings.numberOfRounds {
+        if roundCounter == settings.numberOfRounds {
 
         } else {
             label.text = result ? "Correct!" : "Incorrect!"

@@ -18,13 +18,11 @@ final class BoardNode: SKSpriteNode {
 
     private let scale = UIScreen.main.bounds.height / 667
     private lazy var itemSpacing: CGFloat = 5 * scale
-    private let prepareTime: TimeInterval = 3
-
-    private let board: Board
 
     // MARK: - Variables
 
-    private var game = Game()
+    private let settings: GameSettings
+    private let game: Game
     private var icons: IconsSet
     private var sortedBoxes: [[BoxNode]] = []
     private var boxes: [BoxNode] {
@@ -37,8 +35,9 @@ final class BoardNode: SKSpriteNode {
 
     // MARK: - Initializers
 
-    init(board: Board, size: CGSize, icons: IconsSet) {
-        self.board = board
+    init(settings: GameSettings, size: CGSize, icons: IconsSet) {
+        self.settings = settings
+        self.game = Game(settings: settings)
         self.icons = icons
         super.init(texture: nil, color: .clear, size: size)
         isUserInteractionEnabled = true
@@ -74,12 +73,6 @@ final class BoardNode: SKSpriteNode {
         boxes.forEach { $0.updatePhase(phase) }
     }
 
-    // MARK: - Animations
-
-    private func winAnimation() {
-        
-    }
-
     // MARK: - Event handlers
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -103,6 +96,7 @@ final class BoardNode: SKSpriteNode {
     // MARK: - Board setup
 
     private func setupBoard() {
+        let board = settings.board
         for row in 0 ..< board.rows {
             var rowBox: [BoxNode] = []
             for col in 0 ..< board.cols {
@@ -119,9 +113,10 @@ final class BoardNode: SKSpriteNode {
     }
 
     private func sizeForNode() -> CGSize {
-        let width = (size.width - itemSpacing * CGFloat(board.cols + 1)) / CGFloat(board.cols)
-        let height = (size.height - itemSpacing * CGFloat(board.rows + 1)) / CGFloat(board.rows)
-        return CGSize(width: width, height: height)
+        let board = settings.board
+        let height = (size.width - itemSpacing * CGFloat(board.cols + 1)) / CGFloat(board.cols)
+        let width = (size.height - itemSpacing * CGFloat(board.rows + 1)) / CGFloat(board.rows)
+        return CGSize(width: width, height: width)
     }
 
     private func position(for location: Location, size: CGSize) -> CGPoint {
