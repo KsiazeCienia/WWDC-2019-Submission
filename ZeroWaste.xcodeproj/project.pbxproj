@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C1195309224674CA00B79BB2 /* wrong.png in Resources */ = {isa = PBXBuildFile; fileRef = C1195308224674CA00B79BB2 /* wrong.png */; };
+		C119530B22479E9E00B79BB2 /* GamePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = C119530A22479E9E00B79BB2 /* GamePair.swift */; };
 		C18277DC223FB72D00209369 /* BoxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18277DB223FB72D00209369 /* BoxNode.swift */; };
 		C18277DE22401C3300209369 /* GameRandomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18277DD22401C3300209369 /* GameRandomizer.swift */; };
 		C186CC33223D92E200EF9BC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C186CC32223D92E200EF9BC2 /* AppDelegate.swift */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		C1195308224674CA00B79BB2 /* wrong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wrong.png; sourceTree = "<group>"; };
+		C119530A22479E9E00B79BB2 /* GamePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePair.swift; sourceTree = "<group>"; };
 		C18277DB223FB72D00209369 /* BoxNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxNode.swift; sourceTree = "<group>"; };
 		C18277DD22401C3300209369 /* GameRandomizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRandomizer.swift; sourceTree = "<group>"; };
 		C186CC2F223D92E200EF9BC2 /* ZeroWaste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroWaste.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +143,7 @@
 				C1D9265222416CEA0006E4F3 /* ButtonNode.swift */,
 				C1D9265622417ECF0006E4F3 /* SKSpriteNodeExtensions.swift */,
 				C1D9266A2242C8940006E4F3 /* LocalizedNode.swift */,
+				C119530A22479E9E00B79BB2 /* GamePair.swift */,
 			);
 			path = ZeroWaste;
 			sourceTree = "<group>";
@@ -231,6 +234,7 @@
 			files = (
 				C18277DE22401C3300209369 /* GameRandomizer.swift in Sources */,
 				C186CC39223D92E200EF9BC2 /* GameScene.swift in Sources */,
+				C119530B22479E9E00B79BB2 /* GamePair.swift in Sources */,
 				C186CC3B223D92E200EF9BC2 /* GameViewController.swift in Sources */,
 				C186CC51223DA5B800EF9BC2 /* Game.swift in Sources */,
 				C1D9265722417ECF0006E4F3 /* SKSpriteNodeExtensions.swift in Sources */,

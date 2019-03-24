@@ -23,6 +23,7 @@ final class GameScene: SKScene {
     private let label = SKLabelNode(fontNamed: "AvenirNext-Bold")
     private var timer: Timer?
     private let prepareTime: Int = 3
+    private var types: [GameType] = [.paper, .metal, .bio, .plastic, .glass].shuffled()
     private var counter: Int = 0
     private var roundCounter: Int = 0
 
@@ -95,7 +96,7 @@ final class GameScene: SKScene {
 
     private func setupBoard() {
         let size = CGSize(width: frame.width - 30 * scale, height: frame.width - 30 * scale)
-        boardNode = BoardNode(board: board, size: size)
+        boardNode = BoardNode(board: board, size: size, icons: types[roundCounter].icons())
         boardNode.delegate = self
         boardNode.position = CGPoint(x: frame.midX, y: frame.midY - 50 * scale)
         addChild(boardNode)
@@ -119,7 +120,7 @@ extension GameScene: BoardNodeDelegate {
             label.text = result ? "Correct!" : "Incorrect!"
             animateLabel(hangeTime: 2.6) {
                 self.roundCounter += 1
-                self.boardNode.prepareNewGame()
+                self.boardNode.prepareNewGame(with: self.types[self.roundCounter - 1].icons())
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.boardNode.displayTraps()
                     self.turnOnCountDown()

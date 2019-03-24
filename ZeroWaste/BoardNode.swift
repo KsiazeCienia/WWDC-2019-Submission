@@ -25,6 +25,7 @@ final class BoardNode: SKSpriteNode {
     // MARK: - Variables
 
     private var game = Game()
+    private var icons: IconsSet
     private var sortedBoxes: [[BoxNode]] = []
     private var boxes: [BoxNode] {
         return sortedBoxes.flatMap { $0 }
@@ -36,8 +37,9 @@ final class BoardNode: SKSpriteNode {
 
     // MARK: - Initializers
 
-    init(board: Board, size: CGSize) {
+    init(board: Board, size: CGSize, icons: IconsSet) {
         self.board = board
+        self.icons = icons
         super.init(texture: nil, color: .clear, size: size)
         isUserInteractionEnabled = true
         game.delegate = self
@@ -52,9 +54,11 @@ final class BoardNode: SKSpriteNode {
 
     // MARK: - Game logic
 
-    func prepareNewGame() {
+    func prepareNewGame(with icons: IconsSet) {
         game.prepareNewGame()
-        boxes.forEach { $0.update(with: game.box(for: $0.location)) }
+        boxes.forEach {
+            $0.update(with: game.box(for: $0.location), icons: icons)
+        }
         changeBoxMode(to: .initial)
     }
 
@@ -105,7 +109,7 @@ final class BoardNode: SKSpriteNode {
                 let size = sizeForNode()
                 let location =  Location(row: row, col: col)
                 let box = game.box(for: location)
-                let node = BoxNode(box: box, location: location, size: size)
+                let node = BoxNode(box: box, location: location, size: size, icons: icons)
                 node.position = position(for: location, size: size)
                 addChild(node)
                 rowBox.append(node)

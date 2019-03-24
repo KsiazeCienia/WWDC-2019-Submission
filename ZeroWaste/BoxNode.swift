@@ -28,6 +28,7 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     var location: Location!
     var box: Box!
+    var icons: IconsSet
 
     var isSelected: Bool = false {
         didSet {
@@ -37,9 +38,10 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     // MARk: - Initalizers
 
-    init(box: Box, location: Location, size: CGSize) {
+    init(box: Box, location: Location, size: CGSize, icons: IconsSet) {
         self.location = location
         self.box = box
+        self.icons = icons
         super.init(texture: nil, color: .clear, size: size)
         texture = SKTexture(imageNamed: "dirt")
         setupSelectedNode()
@@ -52,8 +54,9 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     // MARK: - Public
 
-    func update(with box: Box) {
+    func update(with box: Box, icons: IconsSet) {
         self.box = box
+        self.icons = icons
     }
 
 
@@ -180,9 +183,9 @@ final class BoxNode: SKSpriteNode, Localizable {
         case .standard:
             return nil
         case .start:
-            imageAsset = "plastic_bottle"
+            imageAsset = icons.trash
         case .end:
-            imageAsset = "trash"
+            imageAsset = icons.bin
         case .trap:
             imageAsset = "trap.png"
         }
