@@ -24,8 +24,8 @@ enum GameLevel {
             return settings
         case .medium:
             let board = Board(rows: 5, cols: 6)
-            let settings = GameSettings(prepareTime: 5,
-                                        numberOfRounds: 5,
+            let settings = GameSettings(prepareTime: 2,
+                                        numberOfRounds: 1,
                                         numberOfTraps: 6,
                                         board: board)
             return settings

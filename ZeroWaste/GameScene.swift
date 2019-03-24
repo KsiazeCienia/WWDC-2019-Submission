@@ -14,6 +14,7 @@ final class GameScene: SKScene {
     // MARK: - Views
 
     private var boardNode: BoardNode!
+    private var summaryNode: SummaryNode!
     private let label = SKLabelNode(fontNamed: "AvenirNext-Bold")
     private var timer: Timer?
     private var types: [GameType] = [.paper, .metal, .bio, .plastic, .glass].shuffled()
@@ -47,7 +48,6 @@ final class GameScene: SKScene {
             self.turnOnCountDown()
             self.boardNode?.displayTraps()
         }
-        displaySummary()
     }
 
     // MARK: - Logic
@@ -105,10 +105,15 @@ final class GameScene: SKScene {
     }
 
     private func displaySummary() {
-        let size = CGSize(width: 280, height: 200)
-        let summaryNode = SummaryNode(size: size)
+        let size = CGSize(width: 280 * scale, height: 200 * scale)
+        summaryNode = SummaryNode(size: size)
+        summaryNode.delegate = self
         summaryNode.position = CGPoint(x: frame.midX, y: frame.midY)
         addChild(summaryNode)
+    }
+
+    private func handleRoundChange() {
+
     }
 
     // MARK: - Setup
@@ -137,8 +142,14 @@ final class GameScene: SKScene {
 extension GameScene: BoardNodeDelegate {
     func gameEnded(with result: Bool) {
         score = result ? score + 1 : score
-        if roundCounter == settings.numberOfRounds {
 
+
+
+        if roundCounter == settings.numberOfRounds {
+            let blurNode = SKSpriteNode(color: UIColor.black.withAlphaComponent(0.8), size: size)
+            blurNode.position = CGPoint(x: frame.midX, y: frame.midY)
+            addChild(blurNode)
+            displaySummary()
         } else {
             label.text = result ? "Correct!" : "Incorrect!"
             animateLabel(hangeTime: 2.6) {
@@ -149,5 +160,11 @@ extension GameScene: BoardNodeDelegate {
                 }
             }
         }
+    }
+}
+
+extension GameScene: SummaryNodeDelegate {
+    func didTapDone() {
+        removeChildren(in: [summaryNode])
     }
 }
