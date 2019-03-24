@@ -11,6 +11,11 @@ import GameplayKit
 
 final class MenuScene: SKScene {
 
+    enum DisplayMode {
+        case initial
+        case final
+    }
+
     // MARK: - Views
 
     var button: ButtonNode!
@@ -23,13 +28,31 @@ final class MenuScene: SKScene {
 
     private var timer: Timer!
     private var screenFilledArea: CGFloat = 0
+    private var currentPosition: CGPoint = .zero
+    private let mode: DisplayMode
+
+    init(mode: DisplayMode, size: CGSize) {
+        self.mode = mode
+        super.init(size: size)
+        if mode == .initial {
+            setupButton()
+            setupTimer()
+        } else {
+            fillScreenWithTrashes()
+        }
+        setupWorld()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Scene's life cycle
 
     override func didMove(to view: SKView) {
-        setupWorld()
-        setupButton()
-        setupTimer()
+        if mode == .final {
+            physicsBody = nil
+        }
     }
 
     // MARk: - Logic
@@ -70,6 +93,26 @@ final class MenuScene: SKScene {
 
     // MARK: - Setup
 
+    private func fillScreenWithTrashes() {
+        currentPosition = CGPoint(x: frame.minX, y: frame.minY)
+        while true {
+            let trash = createTrash()
+            trash.position = currentPosition
+            incrementFilledSize(with: trash.size)
+            var newX = currentPosition.x + trash.size.width
+            var newY = currentPosition.y
+            if newX > frame.maxX {
+                newX = 0
+                newY += trash.size.height
+                if newY > frame.maxY {
+                    break
+                }
+            }
+            currentPosition = CGPoint(x: newX, y: newY)
+            addChild(trash)
+        }
+    }
+
     private func setupWorld() {
         view?.showsFPS = true
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
@@ -78,12 +121,14 @@ final class MenuScene: SKScene {
     }
 
     private func setupButton() {
-        let size = CGSize(width: 200, height: 40)
-        button = ButtonNode(size: size)
+        let size = CGSize(width: 300, height: 70)
+        let texture = SKTexture(imageNamed: "cleanup")
+        button = ButtonNode(size: size, texture: texture)
         button.position = CGPoint(x: frame.midX, y: frame.midY)
         button.zPosition = 1
         button.setTarget(self, action: #selector(playTapped))
-        button.setTitle("KURWY")
+        button.setTitle("Cleanup the Earth")
+        button.setFontSize(28)
         addChild(button)
     }
 

@@ -15,6 +15,7 @@ final class GameScene: SKScene {
 
     private var boardNode: BoardNode!
     private var summaryNode: SummaryNode!
+    private var menuScene: MenuScene!
     private var blurNode: SKSpriteNode!
     private let label = SKLabelNode(fontNamed: "AvenirNext-Bold")
     private var timer: Timer?
@@ -118,6 +119,8 @@ final class GameScene: SKScene {
             blurNode = SKSpriteNode(color: UIColor.black.withAlphaComponent(0.8), size: size)
             blurNode.position = CGPoint(x: frame.midX, y: frame.midY)
             addChild(blurNode)
+            menuScene = MenuScene(mode: .final, size: size)
+            menuScene.scaleMode = .aspectFill
             displaySummary()
         } else {
             prepareNextRound()
@@ -129,10 +132,8 @@ final class GameScene: SKScene {
     }
 
     private func displayFinalScene() {
-        let scene = MenuScene(size: size)
-        scene.scaleMode = .aspectFill
         let transition = SKTransition.fade(withDuration: 1)
-        view?.presentScene(scene, transition: transition)
+        view?.presentScene(menuScene, transition: transition)
     }
 
     // MARK: - Setup
