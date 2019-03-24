@@ -182,7 +182,7 @@ final class BoxNode: SKSpriteNode, Localizable {
             showAsset(with: animationDuration, with: SKTexture(imageNamed: imageString))
         }
         if box.type == .trap && isSelected {
-            selectedNode.texture = SKTexture(imageNamed: "wrong")
+            selectedNode.texture = SKTexture(imageNamed: "red")
         }
     }
 

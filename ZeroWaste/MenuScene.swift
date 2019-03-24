@@ -38,13 +38,18 @@ public final class MenuScene: SKScene {
         if mode == .initial {
             setupButton()
             setupTimer()
+            let texture = SKTexture(imageNamed: "earth")
+            setupEarth(with: texture)
+
         } else {
             fillScreenWithTrashes()
             setupFinalLabel()
+             let texture = SKTexture(imageNamed: "happy_earth")
+            setupEarth(with: texture)
+            setupRepeatButton()
         }
-        setupEarth()
-        setupLogo()
         setupWorld()
+        setupLogo()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -98,21 +103,38 @@ public final class MenuScene: SKScene {
         addChild(trash)
     }
 
+    @objc
+    private func playAgainTapped() {
+        setupLevelBox()
+    }
+
     // MARK: - Setup
 
-    private func setupEarth() {
-        let texture = SKTexture(imageNamed: "earth")
+    private func setupEarth(with texture: SKTexture) {
         let size = CGSize(width: 250 * scale, height: 250 * scale)
         let earth = SKSpriteNode(texture: texture, color: .clear, size: size)
         earth.position = CGPoint(x: frame.midX, y: frame.midY)
+        earth.zPosition = -1
         addChild(earth)
+    }
+
+    private func setupRepeatButton() {
+        let size = CGSize(width: 260 * scale, height: 60 * scale)
+        let texture = SKTexture(imageNamed: "cleanup")
+        button = ButtonNode(size: size, texture: texture)
+        button.position = CGPoint(x: frame.midX, y: frame.minY + 70 * scale)
+        button.zPosition = 1
+        button.setTarget(self, action: #selector(playAgainTapped))
+        button.setTitle("Play again!")
+        button.setFontSize(28 * scale)
+        addChild(button)
     }
 
     private func setupFinalLabel() {
         let label = SKLabelNode(fontNamed: "AvenirNext-Bold")
-        label.text = "Congratulations \nyou cleanup the Earth!"
+        label.text = "Congratulations!"
         label.fontSize = 30 * scale
-        label.position = CGPoint(x: frame.midX, y: frame.midY)
+        label.position = CGPoint(x: frame.midX, y: frame.midY - 180 * scale)
         addChild(label)
     }
 
