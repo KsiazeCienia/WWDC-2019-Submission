@@ -17,9 +17,10 @@ final class SummaryNode: SKSpriteNode {
     weak var delegate: SummaryNodeDelegate?
 
     private lazy var smallFontSize: CGFloat = 18 * scale
-    private let scale = UIScreen.main.bounds.height / 667
+    private let scale: CGFloat
 
-    init(size: CGSize) {
+    init(size: CGSize, scale: CGFloat) {
+        self.scale = scale
         let texture = SKTexture(imageNamed: "summary")
         super.init(texture: texture, color: .clear, size: size)
         setupSummaryLabel()

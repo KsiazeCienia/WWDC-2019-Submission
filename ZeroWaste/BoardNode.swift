@@ -16,7 +16,7 @@ final class BoardNode: SKSpriteNode {
 
     // MARK: - Constants
 
-    private let scale = UIScreen.main.bounds.height / 667
+    private let scale: CGFloat
     private lazy var itemSpacing: CGFloat = 5 * scale
 
     // MARK: - Variables
@@ -35,7 +35,8 @@ final class BoardNode: SKSpriteNode {
 
     // MARK: - Initializers
 
-    init(settings: GameSettings, size: CGSize, icons: IconsSet) {
+    init(settings: GameSettings, size: CGSize, icons: IconsSet, scale: CGFloat) {
+        self.scale = scale
         self.settings = settings
         self.game = Game(settings: settings)
         self.icons = icons
@@ -103,7 +104,7 @@ final class BoardNode: SKSpriteNode {
                 let size = sizeForNode()
                 let location =  Location(row: row, col: col)
                 let box = game.box(for: location)
-                let node = BoxNode(box: box, location: location, size: size, icons: icons)
+                let node = BoxNode(box: box, location: location, size: size, icons: icons, scale: scale)
                 node.position = position(for: location, size: size)
                 addChild(node)
                 rowBox.append(node)

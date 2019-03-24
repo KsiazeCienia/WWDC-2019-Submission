@@ -27,7 +27,7 @@ final class GameScene: SKScene {
 
     // MARK: - Variables
 
-    private let scale = UIScreen.main.bounds.height / 667
+    private lazy var scale = size.height / 667
 
     // MARK: - Initializers
 
@@ -108,7 +108,7 @@ final class GameScene: SKScene {
 
     private func displaySummary() {
         let size = CGSize(width: 280 * scale, height: 200 * scale)
-        summaryNode = SummaryNode(size: size)
+        summaryNode = SummaryNode(size: size, scale: scale)
         summaryNode.delegate = self
         summaryNode.position = CGPoint(x: frame.midX, y: frame.midY)
         addChild(summaryNode)
@@ -143,7 +143,8 @@ final class GameScene: SKScene {
                           height: frame.width - 30 * scale)
         boardNode = BoardNode(settings: settings,
                               size: size,
-                              icons: types[roundCounter].icons())
+                              icons: types[roundCounter].icons(),
+                              scale: scale)
         boardNode.delegate = self
         boardNode.position = CGPoint(x: frame.midX, y: frame.midY - 50 * scale)
         addChild(boardNode)

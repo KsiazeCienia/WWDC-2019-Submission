@@ -30,7 +30,7 @@ final class MenuScene: SKScene {
     private var screenFilledArea: CGFloat = 0
     private var currentPosition: CGPoint = .zero
     private let mode: DisplayMode
-    private let scale = UIScreen.main.bounds.height / 667
+    private lazy var scale = size.height / 667
 
     init(mode: DisplayMode, size: CGSize) {
         self.mode = mode
@@ -64,7 +64,7 @@ final class MenuScene: SKScene {
     }
 
     private func isFilled() -> Bool {
-        let screenArea = UIScreen.main.bounds.size.height * UIScreen.main.bounds.size.width
+        let screenArea = size.height * size.width
         return (screenFilledArea / screenArea) > 0.85
     }
 

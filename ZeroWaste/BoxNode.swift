@@ -22,7 +22,7 @@ final class BoxNode: SKSpriteNode, Localizable {
     // MARK: - Constants
 
     private let animationDuration: Double = 0.5
-    private let scale = UIScreen.main.bounds.height / 667
+    private let scale: CGFloat
 
     // MARK: - Variable
 
@@ -38,7 +38,8 @@ final class BoxNode: SKSpriteNode, Localizable {
 
     // MARk: - Initalizers
 
-    init(box: Box, location: Location, size: CGSize, icons: IconsSet) {
+    init(box: Box, location: Location, size: CGSize, icons: IconsSet, scale: CGFloat) {
+        self.scale = scale
         self.location = location
         self.box = box
         self.icons = icons
