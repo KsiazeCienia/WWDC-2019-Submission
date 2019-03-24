@@ -14,7 +14,7 @@
 		C11953112247B57A00B79BB2 /* summary.png in Resources */ = {isa = PBXBuildFile; fileRef = C11953102247B57A00B79BB2 /* summary.png */; };
 		C11953132247B58C00B79BB2 /* SummaryNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11953122247B58C00B79BB2 /* SummaryNode.swift */; };
 		C11953152247BB3100B79BB2 /* done.png in Resources */ = {isa = PBXBuildFile; fileRef = C11953142247BB3100B79BB2 /* done.png */; };
-		C11953172247E4AF00B79BB2 /* cleanup.png in Resources */ = {isa = PBXBuildFile; fileRef = C11953162247E4AF00B79BB2 /* cleanup.png */; };
+		C11953192247E66400B79BB2 /* cleanup.png in Resources */ = {isa = PBXBuildFile; fileRef = C11953182247E66400B79BB2 /* cleanup.png */; };
 		C18277DC223FB72D00209369 /* BoxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18277DB223FB72D00209369 /* BoxNode.swift */; };
 		C18277DE22401C3300209369 /* GameRandomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18277DD22401C3300209369 /* GameRandomizer.swift */; };
 		C186CC33223D92E200EF9BC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C186CC32223D92E200EF9BC2 /* AppDelegate.swift */; };
@@ -56,7 +56,7 @@
 		C11953102247B57A00B79BB2 /* summary.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = summary.png; sourceTree = "<group>"; };
 		C11953122247B58C00B79BB2 /* SummaryNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryNode.swift; sourceTree = "<group>"; };
 		C11953142247BB3100B79BB2 /* done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done.png; sourceTree = "<group>"; };
-		C11953162247E4AF00B79BB2 /* cleanup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cleanup.png; sourceTree = "<group>"; };
+		C11953182247E66400B79BB2 /* cleanup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cleanup.png; path = ../../Sketch/cleanup.png; sourceTree = "<group>"; };
 		C18277DB223FB72D00209369 /* BoxNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxNode.swift; sourceTree = "<group>"; };
 		C18277DD22401C3300209369 /* GameRandomizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRandomizer.swift; sourceTree = "<group>"; };
 		C186CC2F223D92E200EF9BC2 /* ZeroWaste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroWaste.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,7 +143,7 @@
 				C1195308224674CA00B79BB2 /* wrong.png */,
 				C11953102247B57A00B79BB2 /* summary.png */,
 				C1D9265422417DD70006E4F3 /* water.png */,
-				C11953162247E4AF00B79BB2 /* cleanup.png */,
+				C11953182247E66400B79BB2 /* cleanup.png */,
 				C1D9265A224180A10006E4F3 /* trap.png */,
 				C1D926722242DAFC0006E4F3 /* garbage.png */,
 				C186CC50223DA5B800EF9BC2 /* Game.swift */,
@@ -237,11 +237,11 @@
 				C1195309224674CA00B79BB2 /* wrong.png in Resources */,
 				C11953152247BB3100B79BB2 /* done.png in Resources */,
 				C1D926732242DAFC0006E4F3 /* garbage.png in Resources */,
-				C11953172247E4AF00B79BB2 /* cleanup.png in Resources */,
 				C186CC40223D92E300EF9BC2 /* Assets.xcassets in Resources */,
 				C1D926812242F8860006E4F3 /* dirt.png in Resources */,
 				C186CC43223D92E300EF9BC2 /* LaunchScreen.storyboard in Resources */,
 				C1D9265522417DD70006E4F3 /* water.png in Resources */,
+				C11953192247E66400B79BB2 /* cleanup.png in Resources */,
 				C186CC37223D92E200EF9BC2 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -30,6 +30,7 @@ final class MenuScene: SKScene {
     private var screenFilledArea: CGFloat = 0
     private var currentPosition: CGPoint = .zero
     private let mode: DisplayMode
+    private let scale = UIScreen.main.bounds.height / 667
 
     init(mode: DisplayMode, size: CGSize) {
         self.mode = mode
@@ -121,14 +122,14 @@ final class MenuScene: SKScene {
     }
 
     private func setupButton() {
-        let size = CGSize(width: 300, height: 70)
+        let size = CGSize(width: 300 * scale, height: 70 * scale)
         let texture = SKTexture(imageNamed: "cleanup")
         button = ButtonNode(size: size, texture: texture)
         button.position = CGPoint(x: frame.midX, y: frame.midY)
         button.zPosition = 1
         button.setTarget(self, action: #selector(playTapped))
         button.setTitle("Cleanup the Earth")
-        button.setFontSize(28)
+        button.setFontSize(28 * scale)
         addChild(button)
     }
 
@@ -144,7 +145,6 @@ final class MenuScene: SKScene {
         let images = ["Apple", "plastic_bottle", "glass_bottle", "paper"]
         let random = images.randomElement()!
         let trash = SKSpriteNode(imageNamed: random)
-        let scale = UIScreen.main.bounds.height / 667
         let size = CGSize(width: 40 * scale, height: 80 * scale)
         trash.size = size
         trash.zRotation = CGFloat.random(in: 0 ... 360)
