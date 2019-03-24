@@ -19,14 +19,14 @@ final class SummaryNode: SKSpriteNode {
     private lazy var smallFontSize: CGFloat = 18 * scale
     private let scale: CGFloat
 
-    init(size: CGSize, scale: CGFloat) {
+    init(size: CGSize, scale: CGFloat, score: Int, correct: Int, numberOfRounds: Int) {
         self.scale = scale
         let texture = SKTexture(imageNamed: "summary")
         super.init(texture: texture, color: .clear, size: size)
         setupSummaryLabel()
         setupScoreLabel()
-        setupScore()
-        setupCorrect()
+        setupScore(with: score)
+        setupCorrect(with: correct, numberOfRounds: numberOfRounds)
         setupCorrectLabel()
         setupDoneButton()
     }
@@ -60,10 +60,10 @@ final class SummaryNode: SKSpriteNode {
         addChild(label)
     }
 
-    private func setupScore() {
+    private func setupScore(with score: Int) {
         let label = SKLabelNode(fontNamed: "AvenirNext-Bold")
         label.fontSize = smallFontSize
-        label.text = "1400"
+        label.text = "\(score)"
         label.position = CGPoint(x: frame.maxX - 60 * scale, y: frame.midY + 5 * scale)
         addChild(label)
     }
@@ -76,10 +76,10 @@ final class SummaryNode: SKSpriteNode {
         addChild(label)
     }
 
-    private func setupCorrect() {
+    private func setupCorrect(with correct: Int, numberOfRounds: Int) {
         let label = SKLabelNode(fontNamed: "AvenirNext-Bold")
         label.fontSize = smallFontSize
-        label.text = "2/5"
+        label.text = "\(correct)/\(numberOfRounds)"
         label.position = CGPoint(x: frame.maxX - 53 * scale, y: frame.midY - 25 * scale)
         addChild(label)
     }

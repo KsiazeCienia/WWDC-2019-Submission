@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum GameLevel {
+public enum GameLevel {
     case easy
     case medium
     case hard
@@ -23,17 +23,17 @@ enum GameLevel {
                                         board: board)
             return settings
         case .medium:
-            let board = Board(rows: 5, cols: 6)
-            let settings = GameSettings(prepareTime: 2,
+            let board = Board(rows: 5, cols: 5)
+            let settings = GameSettings(prepareTime: 3,
                                         numberOfRounds: 1,
-                                        numberOfTraps: 6,
+                                        numberOfTraps: 7,
                                         board: board)
             return settings
         case .hard:
             let board = Board(rows: 6, cols: 6)
             let settings = GameSettings(prepareTime: 3,
                                         numberOfRounds: 5,
-                                        numberOfTraps: 7,
+                                        numberOfTraps: 9,
                                         board: board)
             return settings
         }

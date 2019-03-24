@@ -22,6 +22,7 @@ final class GameScene: SKScene {
     private var types: [GameType] = [.paper, .metal, .bio, .plastic, .glass].shuffled()
     private var counter: Int = 0
     private var roundCounter: Int = 0
+    private var correct: Int = 0
     private var score: Int = 0
     private let settings: GameSettings
 
@@ -108,7 +109,11 @@ final class GameScene: SKScene {
 
     private func displaySummary() {
         let size = CGSize(width: 280 * scale, height: 200 * scale)
-        summaryNode = SummaryNode(size: size, scale: scale)
+        summaryNode = SummaryNode(size: size,
+                                  scale: scale,
+                                  score: score,
+                                  correct: correct,
+                                  numberOfRounds: settings.numberOfRounds)
         summaryNode.delegate = self
         summaryNode.position = CGPoint(x: frame.midX, y: frame.midY)
         addChild(summaryNode)
@@ -162,7 +167,9 @@ final class GameScene: SKScene {
 
 extension GameScene: BoardNodeDelegate {
     func gameEnded(with result: Bool) {
-        score = result ? score + 1 : score
+        correct = result ? correct + 1 : correct
+        let multiplayer = settings.board.rows * settings.board.cols * settings.numberOfTraps
+        score = result ? score + multiplayer : score
         label.text = result ? "Correct!" : "Incorrect!"
         animateLabel(hangeTime: 2.6) {
             self.handleRoundChange()

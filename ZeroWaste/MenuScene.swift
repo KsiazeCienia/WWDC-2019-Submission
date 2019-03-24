@@ -9,9 +9,9 @@
 import SpriteKit
 import GameplayKit
 
-final class MenuScene: SKScene {
+public final class MenuScene: SKScene {
 
-    enum DisplayMode {
+    public enum DisplayMode {
         case initial
         case final
     }
@@ -32,7 +32,7 @@ final class MenuScene: SKScene {
     private let mode: DisplayMode
     private lazy var scale = size.height / 667
 
-    init(mode: DisplayMode, size: CGSize) {
+    public init(mode: DisplayMode, size: CGSize) {
         self.mode = mode
         super.init(size: size)
         if mode == .initial {
@@ -50,7 +50,7 @@ final class MenuScene: SKScene {
 
     // MARK: - Scene's life cycle
 
-    override func didMove(to view: SKView) {
+    override public func didMove(to view: SKView) {
         if mode == .final {
             physicsBody = nil
         }
