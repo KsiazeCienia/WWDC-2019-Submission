@@ -21,8 +21,8 @@ final class ButtonNode: SKSpriteNode {
 
     // MARK: - Initializers
 
-    init(size: CGSize) {
-        super.init(texture: nil, color: .red, size: size)
+    init(size: CGSize, texture: SKTexture? = nil) {
+        super.init(texture: texture, color: .clear, size: size)
         setup()
         setupLabel()
     }
@@ -32,6 +32,10 @@ final class ButtonNode: SKSpriteNode {
     }
 
     // MARK: - Public
+
+    func setFontSize(_ fontSize: CGFloat) {
+        label.fontSize = fontSize
+    }
 
     func setTitle(_ title: String) {
         label.text = title

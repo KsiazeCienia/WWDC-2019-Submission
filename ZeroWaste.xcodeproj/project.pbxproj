@@ -11,6 +11,9 @@
 		C119530B22479E9E00B79BB2 /* GamePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = C119530A22479E9E00B79BB2 /* GamePair.swift */; };
 		C119530D2247A55700B79BB2 /* GameLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C119530C2247A55700B79BB2 /* GameLevel.swift */; };
 		C119530F2247A5CF00B79BB2 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = C119530E2247A5CF00B79BB2 /* GameSettings.swift */; };
+		C11953112247B57A00B79BB2 /* summary.png in Resources */ = {isa = PBXBuildFile; fileRef = C11953102247B57A00B79BB2 /* summary.png */; };
+		C11953132247B58C00B79BB2 /* SummaryNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11953122247B58C00B79BB2 /* SummaryNode.swift */; };
+		C11953152247BB3100B79BB2 /* done.png in Resources */ = {isa = PBXBuildFile; fileRef = C11953142247BB3100B79BB2 /* done.png */; };
 		C18277DC223FB72D00209369 /* BoxNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18277DB223FB72D00209369 /* BoxNode.swift */; };
 		C18277DE22401C3300209369 /* GameRandomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C18277DD22401C3300209369 /* GameRandomizer.swift */; };
 		C186CC33223D92E200EF9BC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C186CC32223D92E200EF9BC2 /* AppDelegate.swift */; };
@@ -49,6 +52,9 @@
 		C119530A22479E9E00B79BB2 /* GamePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePair.swift; sourceTree = "<group>"; };
 		C119530C2247A55700B79BB2 /* GameLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLevel.swift; sourceTree = "<group>"; };
 		C119530E2247A5CF00B79BB2 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
+		C11953102247B57A00B79BB2 /* summary.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = summary.png; sourceTree = "<group>"; };
+		C11953122247B58C00B79BB2 /* SummaryNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryNode.swift; sourceTree = "<group>"; };
+		C11953142247BB3100B79BB2 /* done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done.png; sourceTree = "<group>"; };
 		C18277DB223FB72D00209369 /* BoxNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxNode.swift; sourceTree = "<group>"; };
 		C18277DD22401C3300209369 /* GameRandomizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRandomizer.swift; sourceTree = "<group>"; };
 		C186CC2F223D92E200EF9BC2 /* ZeroWaste.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZeroWaste.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,9 +135,11 @@
 				C1D9267E2242F8810006E4F3 /* grass.png */,
 				C1D926802242F8860006E4F3 /* dirt.png */,
 				C1D926822242FA490006E4F3 /* trash.png */,
+				C11953142247BB3100B79BB2 /* done.png */,
 				C1D9267C2242E97B0006E4F3 /* paper.png */,
 				C1D926702242DA8E0006E4F3 /* Apple.png */,
 				C1195308224674CA00B79BB2 /* wrong.png */,
+				C11953102247B57A00B79BB2 /* summary.png */,
 				C1D9265422417DD70006E4F3 /* water.png */,
 				C1D9265A224180A10006E4F3 /* trap.png */,
 				C1D926722242DAFC0006E4F3 /* garbage.png */,
@@ -150,6 +158,7 @@
 				C119530A22479E9E00B79BB2 /* GamePair.swift */,
 				C119530C2247A55700B79BB2 /* GameLevel.swift */,
 				C119530E2247A5CF00B79BB2 /* GameSettings.swift */,
+				C11953122247B58C00B79BB2 /* SummaryNode.swift */,
 			);
 			path = ZeroWaste;
 			sourceTree = "<group>";
@@ -216,12 +225,14 @@
 				C1D926712242DA8E0006E4F3 /* Apple.png in Resources */,
 				C186CC3E223D92E200EF9BC2 /* Main.storyboard in Resources */,
 				C1D926752242DDEF0006E4F3 /* plastic_bottle.png in Resources */,
+				C11953112247B57A00B79BB2 /* summary.png in Resources */,
 				C186CC35223D92E200EF9BC2 /* GameScene.sks in Resources */,
 				C1D9265B224180A10006E4F3 /* trap.png in Resources */,
 				C1D9267D2242E97C0006E4F3 /* paper.png in Resources */,
 				C1D9267B2242E53B0006E4F3 /* glass_bottle.png in Resources */,
 				C1D926832242FA490006E4F3 /* trash.png in Resources */,
 				C1195309224674CA00B79BB2 /* wrong.png in Resources */,
+				C11953152247BB3100B79BB2 /* done.png in Resources */,
 				C1D926732242DAFC0006E4F3 /* garbage.png in Resources */,
 				C186CC40223D92E300EF9BC2 /* Assets.xcassets in Resources */,
 				C1D926812242F8860006E4F3 /* dirt.png in Resources */,
@@ -242,6 +253,7 @@
 				C119530F2247A5CF00B79BB2 /* GameSettings.swift in Sources */,
 				C186CC39223D92E200EF9BC2 /* GameScene.swift in Sources */,
 				C119530B22479E9E00B79BB2 /* GamePair.swift in Sources */,
+				C11953132247B58C00B79BB2 /* SummaryNode.swift in Sources */,
 				C186CC3B223D92E200EF9BC2 /* GameViewController.swift in Sources */,
 				C186CC51223DA5B800EF9BC2 /* Game.swift in Sources */,
 				C1D9265722417ECF0006E4F3 /* SKSpriteNodeExtensions.swift in Sources */,

@@ -99,7 +99,6 @@ final class MenuScene: SKScene {
         let images = ["Apple", "plastic_bottle", "glass_bottle", "paper"]
         let random = images.randomElement()!
         let trash = SKSpriteNode(imageNamed: random)
-        print(UIScreen.main.bounds)
         let scale = UIScreen.main.bounds.height / 667
         let size = CGSize(width: 40 * scale, height: 80 * scale)
         trash.size = size

@@ -19,6 +19,7 @@ final class GameScene: SKScene {
     private var types: [GameType] = [.paper, .metal, .bio, .plastic, .glass].shuffled()
     private var counter: Int = 0
     private var roundCounter: Int = 0
+    private var score: Int = 0
     private let settings: GameSettings
 
     // MARK: - Variables
@@ -46,9 +47,16 @@ final class GameScene: SKScene {
             self.turnOnCountDown()
             self.boardNode?.displayTraps()
         }
+        displaySummary()
     }
 
     // MARK: - Logic
+
+    private func prepareNextRound() {
+        roundCounter += 1
+        let index = roundCounter % types.count
+        boardNode.prepareNewGame(with: types[index].icons())
+    }
 
     private func turnOnCountDown() {
         counter = settings.prepareTime
@@ -96,6 +104,13 @@ final class GameScene: SKScene {
         return group
     }
 
+    private func displaySummary() {
+        let size = CGSize(width: 280, height: 200)
+        let summaryNode = SummaryNode(size: size)
+        summaryNode.position = CGPoint(x: frame.midX, y: frame.midY)
+        addChild(summaryNode)
+    }
+
     // MARK: - Setup
 
     private func setupBoard() {
@@ -121,13 +136,13 @@ final class GameScene: SKScene {
 
 extension GameScene: BoardNodeDelegate {
     func gameEnded(with result: Bool) {
+        score = result ? score + 1 : score
         if roundCounter == settings.numberOfRounds {
 
         } else {
             label.text = result ? "Correct!" : "Incorrect!"
             animateLabel(hangeTime: 2.6) {
-                self.roundCounter += 1
-                self.boardNode.prepareNewGame(with: self.types[self.roundCounter - 1].icons())
+                self.prepareNextRound()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.boardNode.displayTraps()
                     self.turnOnCountDown()
