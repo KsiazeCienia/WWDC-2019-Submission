@@ -47,7 +47,7 @@ final class GameScene: SKScene {
         setupBoard()
         setupLabel()
         roundCounter += 1
-        animateLabel(sound: false) { [unowned self] in
+        animateLabel { [unowned self] in
             self.turnOnCountDown()
             self.boardNode?.displayTraps()
         }
@@ -73,20 +73,20 @@ final class GameScene: SKScene {
             timer?.invalidate()
             boardNode.turnOnPlayMode()
         } else {
-            animateLabel(sound: true) {
+            animateLabel(soundString: "count_down.mp3") {
                 self.counter -= 1
                 self.label.text = String(self.counter)
             }
         }
     }
 
-    private func animateLabel(hangeTime: Double = 0.6, sound: Bool, completion: (() -> Void)? = nil) {
+    private func animateLabel(hangeTime: Double = 0.6, soundString: String? = nil, completion: (() -> Void)? = nil) {
         let duration = 0.2
         var actionsArray: [SKAction] = []
         let show = showAction(with: duration)
         actionsArray.append(show)
-        if sound {
-            let sound = SKAction.playSoundFileNamed("count_down.mp3", waitForCompletion: false)
+        if let soundString = soundString {
+            let sound = SKAction.playSoundFileNamed(soundString, waitForCompletion: false)
             actionsArray.append(sound)
         }
         let wait = SKAction.wait(forDuration: hangeTime)
@@ -179,7 +179,8 @@ extension GameScene: BoardNodeDelegate {
         let multiplayer = settings.board.rows * settings.board.cols * settings.numberOfTraps
         score = result ? score + multiplayer : score
         label.text = result ? "Correct!" : "Incorrect!"
-        animateLabel(hangeTime: 2.6, sound: false) {
+        let sound = result ? "success.mp3" : "fail.wav"
+        animateLabel(hangeTime: 2.6, soundString: sound) {
             self.handleRoundChange()
         }
     }

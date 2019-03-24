@@ -8,10 +8,10 @@
 
 import Foundation
 
-public enum GameLevel {
-    case easy
-    case medium
-    case hard
+public enum GameLevel: String {
+    case easy = "Easy"
+    case medium = "Medium"
+    case hard = "Hard"
 
     func settings() -> GameSettings {
         switch self {

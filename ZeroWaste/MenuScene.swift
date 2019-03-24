@@ -75,10 +75,8 @@ public final class MenuScene: SKScene {
     private func playTapped() {
         timer.invalidate()
 
-        let gameScene = GameScene(settings: GameLevel.medium.settings(), size: size)
-        scene?.scaleMode = .aspectFill
-        let transition = SKTransition.fade(withDuration: 1)
-        view?.presentScene(gameScene, transition: transition)
+        removeChildren(in: [button])
+        setupLevelBox()
     }
 
     @objc
@@ -113,6 +111,17 @@ public final class MenuScene: SKScene {
             currentPosition = CGPoint(x: newX, y: newY)
             addChild(trash)
         }
+    }
+
+    private func setupLevelBox() {
+        let blurNode = SKSpriteNode(color: UIColor.black.withAlphaComponent(0.8), size: self.size)
+        blurNode.position = CGPoint(x: frame.midX, y: frame.midY)
+        addChild(blurNode)
+        let size = CGSize(width: 320 * scale, height: 250 * scale)
+        let levelHandler = LevelHandler(levels: [.hard, .medium, .easy], scale: scale, size: size)
+        levelHandler.delegate = self
+        levelHandler.position = CGPoint(x: frame.midX, y: frame.midY)
+        addChild(levelHandler)
     }
 
     private func setupLogo() {
@@ -165,5 +174,14 @@ public final class MenuScene: SKScene {
         trash.physicsBody = SKPhysicsBody(rectangleOf: trash.size)
         trash.physicsBody?.mass = 1
         return trash
+    }
+}
+
+extension MenuScene: LevelHandlerDelegate {
+    func didSelectLevel(_ level: GameLevel) {
+        let gameScene = GameScene(settings: level.settings(), size: size)
+        scene?.scaleMode = .aspectFill
+        let transition = SKTransition.fade(withDuration: 1)
+        view?.presentScene(gameScene, transition: transition)
     }
 }

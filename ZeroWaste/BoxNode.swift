@@ -79,12 +79,16 @@ final class BoxNode: SKSpriteNode, Localizable {
     private func updateSelectedState() {
         if isSelected {
             let sound = SKAction.playSoundFileNamed("step_grass.wav", waitForCompletion: false)
-            run(sound)
+            let changeVolumeAction = SKAction.changeVolume(to: 3, duration: 0)
+            let effectAudioGroup = SKAction.group([sound,changeVolumeAction])
+            run(effectAudioGroup)
             let texture = SKTexture(imageNamed: "grass")
             showSelectedNode(duration: 0, texture: texture)
         } else {
             let sound = SKAction.playSoundFileNamed("step_grass.wav", waitForCompletion: false)
-            run(sound)
+            let changeVolumeAction = SKAction.changeVolume(to: 3, duration: 0)
+            let effectAudioGroup = SKAction.group([sound,changeVolumeAction])
+            run(effectAudioGroup)
             hideSelectedNode(duration: 0)
         }
     }

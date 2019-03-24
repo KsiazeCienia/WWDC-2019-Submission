@@ -115,7 +115,6 @@ final class BoardNode: SKSpriteNode {
 
     private func sizeForNode() -> CGSize {
         let board = settings.board
-        let height = (size.width - itemSpacing * CGFloat(board.cols + 1)) / CGFloat(board.cols)
         let width = (size.height - itemSpacing * CGFloat(board.rows + 1)) / CGFloat(board.rows)
         return CGSize(width: width, height: width)
     }

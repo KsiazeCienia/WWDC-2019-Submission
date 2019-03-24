@@ -18,6 +18,7 @@ final class ButtonNode: SKSpriteNode {
 
     weak var target: AnyObject?
     var action: Selector?
+    var level: GameLevel!
 
     // MARK: - Initializers
 
