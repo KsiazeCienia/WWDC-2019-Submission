@@ -15,6 +15,7 @@ final class GameScene: SKScene {
 
     private var boardNode: BoardNode!
     private var summaryNode: SummaryNode!
+    private var blurNode: SKSpriteNode!
     private let label = SKLabelNode(fontNamed: "AvenirNext-Bold")
     private var timer: Timer?
     private var types: [GameType] = [.paper, .metal, .bio, .plastic, .glass].shuffled()
@@ -113,7 +114,25 @@ final class GameScene: SKScene {
     }
 
     private func handleRoundChange() {
+        if roundCounter == settings.numberOfRounds {
+            blurNode = SKSpriteNode(color: UIColor.black.withAlphaComponent(0.8), size: size)
+            blurNode.position = CGPoint(x: frame.midX, y: frame.midY)
+            addChild(blurNode)
+            displaySummary()
+        } else {
+            prepareNextRound()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.boardNode.displayTraps()
+                self.turnOnCountDown()
+            }
+        }
+    }
 
+    private func displayFinalScene() {
+        let scene = MenuScene(size: size)
+        scene.scaleMode = .aspectFill
+        let transition = SKTransition.fade(withDuration: 1)
+        view?.presentScene(scene, transition: transition)
     }
 
     // MARK: - Setup
@@ -142,29 +161,15 @@ final class GameScene: SKScene {
 extension GameScene: BoardNodeDelegate {
     func gameEnded(with result: Bool) {
         score = result ? score + 1 : score
-
-
-
-        if roundCounter == settings.numberOfRounds {
-            let blurNode = SKSpriteNode(color: UIColor.black.withAlphaComponent(0.8), size: size)
-            blurNode.position = CGPoint(x: frame.midX, y: frame.midY)
-            addChild(blurNode)
-            displaySummary()
-        } else {
-            label.text = result ? "Correct!" : "Incorrect!"
-            animateLabel(hangeTime: 2.6) {
-                self.prepareNextRound()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.boardNode.displayTraps()
-                    self.turnOnCountDown()
-                }
-            }
+        label.text = result ? "Correct!" : "Incorrect!"
+        animateLabel(hangeTime: 2.6) {
+            self.handleRoundChange()
         }
     }
 }
 
 extension GameScene: SummaryNodeDelegate {
     func didTapDone() {
-        removeChildren(in: [summaryNode])
+        displayFinalScene()
     }
 }
